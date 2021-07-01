@@ -47,21 +47,24 @@
     
     
     | 
-    <a href='/tags/Computer-Architecture/'>Computer Architecture</a>
+    <a href='/tags/Computer-Architecture/'>Computer Architecture</a>,
+    
+    <a href='/tags/Computer-Arithmetic/'>Computer Arithmetic</a>,
+    
+    <a href='/tags/object-Object/'>[object Object]</a>
     
     
 </span>
     <h1 class="post-title">Number Representation</h1>
     <section class="post-content">
-      <h1 id="Number-Representation"><a href="#Number-Representation" class="headerlink" title="Number Representation"></a>Number Representation</h1><p>Topics: Computer Arithmetic</p>
-<blockquote>
+      <blockquote>
 <p>Reading Materials and Tutoring Online:</p>
 <p><a target="_blank" rel="noopener" href="https://ryanstutorials.net/binary-tutorial/binary-negative-numbers.php#converting">Learn Binary Negative Numbers and 2’s Complement</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html">https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://ncalculators.com/digital-computation/1s-2s-complement-calculator.htm">1’s &amp; 2’s Complement Calculator</a></p>
 </blockquote>
 <h2 id="為什麼電腦不用十進位而用二進位？"><a href="#為什麼電腦不用十進位而用二進位？" class="headerlink" title="為什麼電腦不用十進位而用二進位？"></a>為什麼電腦不用十進位而用二進位？</h2><p>A: signal 的 voltage 只能分成 high 和 low →→ 只能有兩種state</p>
-<h3 id="電子電路："><a href="#電子電路：" class="headerlink" title="電子電路："></a><strong>電子電路：</strong></h3><ul>
+<h3 id="電子電路"><a href="#電子電路" class="headerlink" title="電子電路"></a>電子電路</h3><ul>
 <li>switch(n-type transistor):<ul>
 <li>three terminals: the source, the gate, and the drain.</li>
 <li>開：<ol>
@@ -73,7 +76,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="數位電子學"><a href="#數位電子學" class="headerlink" title="數位電子學"></a><strong>數位電子學</strong></h3><ul>
+<h3 id="數位電子學"><a href="#數位電子學" class="headerlink" title="數位電子學"></a>數位電子學</h3><ul>
 <li>有了開關就可以做邏輯閘，e.g. NAND gate，NAND gate 是 function complete ，任何一個 boolean function 都可以用 NAND gate 組合表示出來</li>
 <li>有了邏輯閘就可以做邏輯電路，也可以做記憶元件</li>
 </ul>
@@ -206,7 +209,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="Data-Input-Analog-—-Digital"><a href="#Data-Input-Analog-—-Digital" class="headerlink" title="Data Input Analog — Digital"></a>Data Input Analog — Digital</h1><ol>
+<h2 id="Data-Input-Analog-—-Digital"><a href="#Data-Input-Analog-—-Digital" class="headerlink" title="Data Input Analog — Digital"></a>Data Input Analog — Digital</h2><ol>
 <li><strong>Sample</strong><ul>
 <li>We divide music into tiny intervals, like for a CD, there are 44100s in one second.</li>
 <li>We ask what the height of the signal is.</li>
@@ -276,7 +279,7 @@
 <li>The number of digits needed to represent $n$ in base $b$<br>is at least: $log_b(n+1)$</li>
 </ul>
 <hr>
-<h1 id="Base-Conversion"><a href="#Base-Conversion" class="headerlink" title="Base Conversion"></a>Base Conversion</h1><h2 id="Binary-Decimal-Hex"><a href="#Binary-Decimal-Hex" class="headerlink" title="Binary, Decimal, Hex"></a>Binary, Decimal, Hex</h2><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ojmkk7oj30ty0cudrl.jpg" alt=""></p>
+<h2 id="Base-Conversion"><a href="#Base-Conversion" class="headerlink" title="Base Conversion"></a>Base Conversion</h2><h3 id="Binary-Decimal-Hex"><a href="#Binary-Decimal-Hex" class="headerlink" title="Binary, Decimal, Hex"></a>Binary, Decimal, Hex</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ojmkk7oj30ty0cudrl.jpg" alt=""></p>
 <ul>
 <li><p><strong>Relationship between decimal, hexadecimal and binary</strong></p>
 <p>  <a target="_blank" rel="noopener" href="https://www.notion.so/bb87049a052940d1b442f69c60cca337">relationship between decimal, hexadecimal and binary</a></p>
@@ -466,23 +469,23 @@
 </li>
 </ul>
 <hr>
-<h1 id="Arithematics"><a href="#Arithematics" class="headerlink" title="Arithematics"></a>Arithematics</h1><p>We can <strong>add, substract, multiply, divide, compare</strong> them</p>
-<h2 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h2><ul>
+<h2 id="Arithematics"><a href="#Arithematics" class="headerlink" title="Arithematics"></a>Arithematics</h2><p>We can <strong>add, substract, multiply, divide, compare</strong> them</p>
+<h3 id="Addition"><a href="#Addition" class="headerlink" title="Addition"></a>Addition</h3><ul>
 <li>0 + 0 = 0</li>
 <li>0 + 1 = 1</li>
 <li>1 + 0 = 1</li>
 <li>1 + 1 = 10 (which is 0 carry 1)</li>
 <li>1 + 1 + 1 = 11</li>
 </ul>
-<h2 id="Subtraction"><a href="#Subtraction" class="headerlink" title="Subtraction"></a>Subtraction</h2><ul>
+<h3 id="Subtraction"><a href="#Subtraction" class="headerlink" title="Subtraction"></a>Subtraction</h3><ul>
 <li>1 - 1 = 0</li>
 <li>0 - 1 = 1 (put “-1” to next bit)</li>
 </ul>
 <p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ogvns8nj306w05674q.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%204.png"></p>
 <p>3rd bit carry -1, so 减数0被借去1，变成1，1 - 1 = 0, 3rd bit result is 0；0被减去之前要找前面的1借1，所以减数4th bit 1 - 1 = 0，结果为0</p>
-<h3 id="Multiplication"><a href="#Multiplication" class="headerlink" title="Multiplication"></a>Multiplication</h3><p>Same procedure for base 10 multiplication</p>
+<h3 id="Multiplication"><a href="#Multiplication" class="headerlink" title="Multiplication"></a>Multiplication</h3><p>Same procedure as base 10 multiplication</p>
 <hr>
-<h1 id="Overflow"><a href="#Overflow" class="headerlink" title="Overflow"></a>Overflow</h1><p>When the magnitude of the result is too big to fit into result representation. </p>
+<h2 id="Overflow"><a href="#Overflow" class="headerlink" title="Overflow"></a>Overflow</h2><p>When the magnitude of the result is too big to fit into result representation. </p>
 <ul>
 <li><strong>Numeral</strong> are <strong>representations</strong> of numbers (an abstraction)</li>
 <li><p>Digits of <strong>numeral</strong>, not numbers</p>
@@ -495,31 +498,36 @@
 <li>The most common result of an overflow is that the least significant representable digits of the result are stored; the result is said to wrap around the maximum (i.e. modulo a power of the radix, usually two in modern computers, but sometimes ten or another radix).</li>
 </ul>
 <p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l996r7uj31400u0qv5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/IMG_7655.png"></p>
-<h2 id="Overflow-of-Unsigned"><a href="#Overflow-of-Unsigned" class="headerlink" title="Overflow of Unsigned"></a>Overflow of Unsigned</h2><ul>
+<h3 id="Overflow-of-Unsigned"><a href="#Overflow-of-Unsigned" class="headerlink" title="Overflow of Unsigned"></a>Overflow of Unsigned</h3><ul>
 <li>$1 + 255 = 0$</li>
 <li>Handling — modulo power of two</li>
 </ul>
-<h2 id="Overflow-of-Signed"><a href="#Overflow-of-Signed" class="headerlink" title="Overflow of Signed"></a>Overflow of Signed</h2><ul>
+<h3 id="Overflow-of-Signed"><a href="#Overflow-of-Signed" class="headerlink" title="Overflow of Signed"></a>Overflow of Signed</h3><ul>
 <li>undefined behavior</li>
 </ul>
-<h2 id="Overflow-in-Bias-Form"><a href="#Overflow-in-Bias-Form" class="headerlink" title="Overflow in Bias Form"></a>Overflow in Bias Form</h2><ul>
+<h3 id="Overflow-in-Bias-Form"><a href="#Overflow-in-Bias-Form" class="headerlink" title="Overflow in Bias Form"></a>Overflow in Bias Form</h3><ul>
 <li>$1 + 128 = -127$</li>
 <li>The result of addition wraps around, so the result of <strong>adding two numbers</strong> with the <strong>same signs</strong> will have the results in <strong>opposite sign</strong>.</li>
 </ul>
-<h2 id="Overflow-in-Two’s-Complement"><a href="#Overflow-in-Two’s-Complement" class="headerlink" title="Overflow in Two’s Complement"></a>Overflow in Two’s Complement</h2><p>If 2 Two’s Complement numbers are added, and they both have the same sign (both positive or both negative), then overflow occurs if and only if the result has the opposite sign. Overflow never occurs when adding operands with different signs.</p>
-<h2 id="Check-for-Integer-Overflow"><a href="#Check-for-Integer-Overflow" class="headerlink" title="Check for Integer Overflow"></a>Check for Integer Overflow</h2><h3 id="Method-1"><a href="#Method-1" class="headerlink" title="Method 1"></a>Method 1</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1)  Calculate sum</span><br><span class="line">2)  If both numbers are positive and sum is negative then return -1</span><br><span class="line">     Else</span><br><span class="line">        If both numbers are negative and sum is positive then return -1</span><br><span class="line">        Else return 0</span><br></pre></td></tr></table></figure>
+<h3 id="Overflow-in-Two’s-Complement"><a href="#Overflow-in-Two’s-Complement" class="headerlink" title="Overflow in Two’s Complement"></a>Overflow in Two’s Complement</h3><p>If 2 Two’s Complement numbers are added, and they both have the same sign (both positive or both negative), then overflow occurs if and only if the result has the opposite sign. Overflow never occurs when adding operands with different signs.</p>
+<h3 id="Check-for-Integer-Overflow"><a href="#Check-for-Integer-Overflow" class="headerlink" title="Check for Integer Overflow"></a>Check for Integer Overflow</h3><h4 id="Method-1"><a href="#Method-1" class="headerlink" title="Method 1"></a>Method 1</h4><ol>
+<li>Calculate sum</li>
+<li>If both numbers are positive and sum is negative then return -1<br> Else<pre><code>If both numbers are negative and sum is positive then return -1
+Else return 0
+</code></pre></li>
+</ol>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">addOvf</span><span class="params">(<span class="keyword">int</span>* result, <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    *result = a + b; </span><br><span class="line">    <span class="keyword">if</span>(a &gt; <span class="number">0</span> &amp;&amp; b &gt; <span class="number">0</span> &amp;&amp; *result &lt; <span class="number">0</span>) </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">    <span class="keyword">if</span>(a &lt; <span class="number">0</span> &amp;&amp; b &lt; <span class="number">0</span> &amp;&amp; *result &gt; <span class="number">0</span>) </span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Method-2"><a href="#Method-2" class="headerlink" title="Method 2"></a>Method 2</h3><p>Thanks to Himanshu Aggarwal for adding this method. This method doesn’t modify *result if there us an overflow.</p>
+<h4 id="Method-2"><a href="#Method-2" class="headerlink" title="Method 2"></a>Method 2</h4><p>Thanks to Himanshu Aggarwal for adding this method. This method doesn’t modify *result if there us an overflow.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">addOvf</span><span class="params">(<span class="keyword">int</span>* result, <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">if</span>( a &gt; INT_MAX - b)</span><br><span class="line">     <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">   &#123;</span><br><span class="line">     *result = a + b;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> *res = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">  <span class="keyword">int</span> x = <span class="number">2147483640</span>;</span><br><span class="line">  <span class="keyword">int</span> y = <span class="number">10</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, addOvf(res, x, y));</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;\n %d&quot;</span>, *res);</span><br><span class="line">  getchar();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
-<h1 id="Unsigned-In-C"><a href="#Unsigned-In-C" class="headerlink" title="Unsigned In C"></a>Unsigned In C</h1><p>C: <code>unsigned int</code></p>
+<h2 id="Unsigned-In-C"><a href="#Unsigned-In-C" class="headerlink" title="Unsigned In C"></a>Unsigned In C</h2><p>C: <code>unsigned int</code></p>
 <p>C18: <code>uintN_t</code> (N is the width of the numeral)</p>
 <p>(for N=32, $2^{N - 1} = 4,294,967,295$)</p>
-<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8h84smj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%205.png" style="zoom:67%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8h84smj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%205.png" style="zoom: 50%;" /></p>
 <blockquote>
 <p>The same bits can be interpreted in many diﬀerent ways with the exact same bits! It can be from an unsigned number to a signed number or even a program. It is all dependent on your interpretation.</p>
 </blockquote>
-<h1 id="Complement-the-bits"><a href="#Complement-the-bits" class="headerlink" title="Complement the bits"></a>Complement the bits</h1><ul>
+<h2 id="Complement-the-bits"><a href="#Complement-the-bits" class="headerlink" title="Complement the bits"></a>Complement the bits</h2><ul>
 <li><em>Generally, there are two types of complement of Binary number: 1’s complement and 2’s complement.</em></li>
 </ul>
 <h3 id="Binary’s-Sign"><a href="#Binary’s-Sign" class="headerlink" title="Binary’s Sign"></a>Binary’s Sign</h3><ul>
@@ -615,7 +623,7 @@
 <li>We can simply shift the left odometer by one — there exists a better solution; thus one’s complement was <strong>abandoned</strong> eventually. → two’s complement</li>
 </ul>
 <hr>
-<h1 id="Two’s-Complement-补码"><a href="#Two’s-Complement-补码" class="headerlink" title="Two’s Complement 补码"></a>Two’s Complement 补码</h1><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7ppmo6j30x00fwmz6.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%209.png"></p>
+<h2 id="Two’s-Complement-补码"><a href="#Two’s-Complement-补码" class="headerlink" title="Two’s Complement 补码"></a>Two’s Complement 补码</h2><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7ppmo6j30x00fwmz6.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%209.png"></p>
 <ul>
 <li><p>Table</p>
 <p>  <a target="_blank" rel="noopener" href="https://www.notion.so/d1d8a6053a2d4197bf42ffab2924d893">Table for two’s complement</a></p>
@@ -695,8 +703,7 @@
 <p><a target="_blank" rel="noopener" href="https://www.notion.so/65ca51ef24e242bb9c2b9f471c0e94bf">Copy of 2’s Complement Bit Range</a></p>
 </li>
 </ul>
-<hr>
-<h2 id="Arithmetic"><a href="#Arithmetic" class="headerlink" title="Arithmetic"></a>Arithmetic</h2><h3 id="Addition-1"><a href="#Addition-1" class="headerlink" title="Addition"></a>Addition</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0okgaz6zj31k008cmyc.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2015.png"></p>
+<h3 id="Addition-1"><a href="#Addition-1" class="headerlink" title="Addition"></a>Addition</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0okgaz6zj31k008cmyc.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2015.png"></p>
 <p><strong>Subtractions by 2’s Complement</strong></p>
 <p>The algorithm to subtract two binary number using 2’s complement is explained as following below −</p>
 <ul>
@@ -706,10 +713,11 @@
 <li>If there is no carry bit 1, then take 2’s complement of the result which will be negative</li>
 </ul>
 <hr>
-<h1 id="Biased-Encoding"><a href="#Biased-Encoding" class="headerlink" title="Biased Encoding"></a>Biased Encoding</h1><ul>
+<h2 id="Biased-Encoding"><a href="#Biased-Encoding" class="headerlink" title="Biased Encoding"></a>Biased Encoding</h2><ul>
 <li><strong>For example:</strong> 8 bit, range is $[-127, 128]$</li>
 <li>Bias generally should be $2^{n-1} - 1$ to make number</li>
 </ul>
+<hr>
 <h2 id="数据类型的大小"><a href="#数据类型的大小" class="headerlink" title="数据类型的大小"></a>数据类型的大小</h2><p><strong>数据类型所占字节数</strong></p>
 <p><strong>32位和64位下</strong></p>
 <ul>
