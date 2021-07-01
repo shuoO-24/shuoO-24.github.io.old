@@ -128,7 +128,7 @@
 <p>  One way to encode decimal digits using binary signals is to encode each of the digits 0-9 by means of its <strong>4-bit</strong> binary representation:</p>
 <ul>
 <li><p>The use of digit values 0 through r – 1 in radix r is just a convention. We could use more than r digit values (for example, digit values –2 to 2 in radix 4) or use r digit values that do not start with 0 (for example, digit set {–1, 0, 1} in radix 3).</p>
-<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohxre4cj30b60ds0t5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled.png" style="zoom:50%;" /></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohxre4cj30b60ds0t5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled.png" style="zoom: 33%;" /></p>
 </li>
 </ul>
 </li>
@@ -514,7 +514,7 @@
 <li>In most modern systems, the value doesn’t actually overflow into adjacent memory bits but is <strong>wrapped</strong> <strong>around</strong> or truncated using a modulo operation to fit in the variable.</li>
 <li>The most common result of an overflow is that the least significant representable digits of the result are stored; the result is said to wrap around the maximum (i.e. modulo a power of the radix, usually two in modern computers, but sometimes ten or another radix).</li>
 </ul>
-<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l996r7uj31400u0qv5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/IMG_7655.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l996r7uj31400u0qv5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/IMG_7655.png" style="zoom:50%;" /></p>
 <h3 id="Overflow-of-Unsigned"><a href="#Overflow-of-Unsigned" class="headerlink" title="Overflow of Unsigned"></a>Overflow of Unsigned</h3><ul>
 <li>$1 + 255 = 0$</li>
 <li>Handling — modulo power of two</li>
@@ -540,7 +540,7 @@ Else return 0
 <h2 id="Unsigned-In-C"><a href="#Unsigned-In-C" class="headerlink" title="Unsigned In C"></a>Unsigned In C</h2><p>C: <code>unsigned int</code></p>
 <p>C18: <code>uintN_t</code> (N is the width of the numeral)</p>
 <p>(for N=32, $2^{N - 1} = 4,294,967,295$)</p>
-<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8h84smj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%205.png" style="zoom: 50%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8h84smj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%205.png" style="zoom: 33%;" /></p>
 <blockquote>
 <p>The same bits can be interpreted in many diﬀerent ways with the exact same bits! It can be from an unsigned number to a signed number or even a program. It is all dependent on your interpretation.</p>
 </blockquote>
@@ -622,14 +622,14 @@ Else return 0
 </ul>
 <h2 id="Shortcomings-of-One’s-Complement-Sign-amp-Magnitude"><a href="#Shortcomings-of-One’s-Complement-Sign-amp-Magnitude" class="headerlink" title="Shortcomings of One’s Complement (Sign &amp; Magnitude)"></a>Shortcomings of One’s Complement (Sign &amp; Magnitude)</h2><h3 id="Binary-Odometer"><a href="#Binary-Odometer" class="headerlink" title="Binary Odometer"></a>Binary Odometer</h3><ul>
 <li><p>We can use five fingers (one hand) to represent binary numerals and count them continuously from 0 to 31:</p>
-<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8mnzuuj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%207.png" style="zoom:50%;" /></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8mnzuuj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%207.png" style="zoom: 33%;" /></p>
 <p>  But with signed numbers, we need to reverse the order of counting for the left of the numerals.</p>
 <ul>
 <li><strong>Signed binary odometer:</strong> The leftmost bit is used for the sign, which leaves seven bits for the magnitude. The magnitude uses 7-bit unsigned binary, which can represent 010 (as 000 0000) up to 12710 (as 111 1111). The eighth bit makes these positive or negative, resulting in -12710, … -0, 0, … 12710.</li>
 </ul>
 </li>
 <li><p>Incremet binary odometer sometimes <strong>increase</strong> values, sometimes <strong>decrease</strong> values</p>
-<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7zuwukj31cy0ru7wh.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%208.png"></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7zuwukj31cy0ru7wh.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%208.png" style="zoom: 50%;" /></p>
 </li>
 <li><p>There are <strong>two zeros</strong>: — two zeros(00000 and 11111) overlap</p>
 <ul>
@@ -699,7 +699,7 @@ Else return 0
 <li>from $−2^{n-1}$ to $+2^{n−1}-1$ when subtracting</li>
 </ul>
 <h3 id="Intuitive-Understanding"><a href="#Intuitive-Understanding" class="headerlink" title="Intuitive Understanding"></a>Intuitive Understanding</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2q351fj60y80bwmy802.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2013.png"></p>
-<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2u5eztj30xk0cu0u3.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2014.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2u5eztj30xk0cu0u3.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2014.png" style="zoom:67%;" /></p>
 <h3 id="Converting-Two’s-Complement-to-Decimal"><a href="#Converting-Two’s-Complement-to-Decimal" class="headerlink" title="Converting Two’s Complement to Decimal"></a>Converting Two’s Complement to Decimal</h3><p><strong>Example:</strong> Converting 1111 to decimal:</p>
 <ol>
 <li>The number starts with 1, so it’s negative, so we find the <strong>complement</strong> of 1111, which is 0000.</li>
