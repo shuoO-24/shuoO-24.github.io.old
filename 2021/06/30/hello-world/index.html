@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html lang='en, cn'>
-
+<html lang="en, cn">
 <head>
-  <meta name="generator" content="Hexo 5.4.0">
-  <meta charset="utf-8">
-  
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-  <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/css/main.css">
 
-  <meta name="renderer" content="webkit">
-  <meta name="force-rendering" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="HandheldFriendly" content="True" >
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="theme-color" content="#f8f8f8">
-  <title>RISC-V Instruction Overview - Shuo的空间站</title>
 
-  
-    <meta name="description" content="References:  【参考 1】: The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA, Document Version 20191213 【参考 2】: Using as: https:&#x2F;&#x2F;sourceware.org&#x2F;binutils&#x2F;docs&#x2F;as&#x2F; 【参考 3】: How to Use Inline Asse">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"shuoo-24.github.io","root":"/","scheme":"Gemini","version":"8.0.0","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="References:  【参考 1】: The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA, Document Version 20191213 【参考 2】: Using as: https:&#x2F;&#x2F;sourceware.org&#x2F;binutils&#x2F;docs&#x2F;as&#x2F; 【参考 3】: How to Use Inline Asse">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RISC-V Instruction Overview">
 <meta property="og:url" content="http://shuoo-24.github.io/2021/06/30/hello-world/index.html">
@@ -72,78 +76,251 @@
 <meta property="article:tag" content="ISA">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5he6eo1mj30xc0i8tku.jpg">
-  
+
+
+<link rel="canonical" href="http://shuoo-24.github.io/2021/06/30/hello-world/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en, cn'
+  };
+</script>
+
+  <title>RISC-V Instruction Overview | Shuo的空间站</title>
   
 
-  <!-- feed -->
-  
 
-  
-    
-<link rel="stylesheet" href="/css/main.css">
 
-  
 
-  
-  
-  
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 <!-- hexo injector head_end end --></head>
 
-<body>
-  
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
 
-  <div class='l_body' id='start'>
-    <aside class='l_left'>
-    
+  <div class="site-meta">
 
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Shuo的空间站</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Lavender Spacecraft🪐✨</p>
+      <img class="custom-logo-image" src="/source/images/favicon_io/apple-touch-icon.png" alt="Shuo的空间站">
+  </div>
 
-<header class="header">
-
-<div class="logo-wrap"><a class="title" href="/">Shuo的空间站</a></div><nav class="menu dis-select"></nav></header>
-<div class='widgets'>
-  
-    
-      
-      
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">TOC</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="toc-text">语法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1"><span class="toc-text">汇编指令操作对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="toc-text">指令编码格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-R-type-Register"><span class="toc-text">1. R-type:(Register)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#All-Instructions"><span class="toc-text">All Instructions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-I-type-Immediate"><span class="toc-text">2. I-type: (Immediate)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#All-instructions"><span class="toc-text">All instructions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Load-Instructions-are-also-I-type"><span class="toc-text">Load Instructions are also I-type</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-S-type-Store"><span class="toc-text">3. S-type: (Store)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#All-instructions-1"><span class="toc-text">All instructions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-B-type-Branch"><span class="toc-text">4. B-type: (Branch)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Branching-Instruction-Usage"><span class="toc-text">Branching Instruction Usage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PC-Relative-Addressing"><span class="toc-text">PC-Relative Addressing</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Branch-Calculation"><span class="toc-text">Branch Calculation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Actural-RV32-Branch-Calculation"><span class="toc-text">Actural RV32 Branch Calculation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Determine-Offset"><span class="toc-text">Determine Offset</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#All-instructions-2"><span class="toc-text">All instructions</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Translation"><span class="toc-text">Translation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-U-type-Upper"><span class="toc-text">5. U-type: (Upper)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Long-Immediate"><span class="toc-text">Long Immediate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LUI-to-Create-Long-Immediate"><span class="toc-text">LUI to Create Long Immediate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AUIPC"><span class="toc-text">AUIPC</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-J-type-Jump"><span class="toc-text">6. J-type: (Jump)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Uses-of-JAL"><span class="toc-text">Uses of JAL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JALR-Instruction-I-Format"><span class="toc-text">JALR Instruction (I-Format)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Uses-of-JALR"><span class="toc-text">Uses of JALR</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translation-Between-hexdecimal-and-instructions"><span class="toc-text">Translation Between hexdecimal and instructions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PC-Addressing"><span class="toc-text">PC-Addressing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Questions-on-PC-addressing"><span class="toc-text">Questions on PC-addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RISC-V-%E6%8C%87%E4%BB%A4%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="toc-text">RISC-V 指令寻址模式总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Arithmetic-Instruction"><span class="toc-text">算术运算指令 Arithmetic Instruction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#addi"><span class="toc-text">addi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LUI-Load-Upper-Immediate"><span class="toc-text">LUI (Load Upper Immediate)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AUIPC-add-upper-immediate-to-pc"><span class="toc-text">AUIPC (add upper immediate to pc)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LA%EF%BC%88Load-Address%EF%BC%89"><span class="toc-text">LA（Load Address）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MUL"><span class="toc-text">MUL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%85%B6%E4%BB%96%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">基于算术运算指令实现的其他伪指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PC-Relative-amp-PC-Absolute"><span class="toc-text">PC-Relative &amp; PC-Absolute</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Shifting-Instructions"><span class="toc-text">移位运算指令 (Shifting Instructions)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E7%A7%BB%E4%BD%8D"><span class="toc-text">逻辑移位</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SLLI"><span class="toc-text">SLLI</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E7%A7%BB%E4%BD%8D"><span class="toc-text">算术移位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB%E5%86%99%E6%8C%87%E4%BB%A4"><span class="toc-text">内存读写指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB-Load"><span class="toc-text">内存读 (Load)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%86%99-store"><span class="toc-text">内存写 (store)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4%EF%BC%88Unconditional-Jump-Instructions%EF%BC%89"><span class="toc-text">无条件跳转指令（Unconditional Jump Instructions）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-text">分支跳转指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4%EF%BC%88Conditional-Branch-Instructions%EF%BC%89"><span class="toc-text">条件分支指令（Conditional Branch Instructions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RISC-V-Features-n-times-16-bit-Instructions"><span class="toc-text">RISC-V Features, $n\times 16$-bit Instructions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-Immediates"><span class="toc-text">RISC-V Immediates</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#No-Subtract-Immediate"><span class="toc-text">No Subtract Immediate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Register-Zero"><span class="toc-text">Register Zero</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Memory-Addresses-are-in-Bytes"><span class="toc-text">Memory Addresses are in Bytes</span></a></li></ol></div></div></div>
-
-    
-  
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
-    </aside>
-    <div class='l_main'>
-      
 
-      
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
 
 
-  <div class='bread-nav fs12'>
+
+
+</div>
+        
   
-    
-    <div id='breadcrumb'>
-      <a class='cap breadcrumb' href='/'>Home</a>
-      <span class="sep"></span>
-      <a class='cap breadcrumb' href='/'>Blog</a>
-      
-        <span class="sep"></span>
-        <a class="cap breadcrumb-link" href="/categories/UCB-61C/">UCB-61C</a>
-      
-    </div>
-    <div id='post-meta'>
-      Posted on&nbsp;<time datetime='2021-06-30T10:23:04.672Z'>2021-06-30</time>
-    </div>
-  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
+  <aside class="sidebar">
 
-<article class='content md post'>
-<h1 class="article-title"><span>RISC-V Instruction Overview</span></h1>
-<blockquote>
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">语法介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">汇编指令操作对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98"><span class="nav-number">2.2.</span> <span class="nav-text">内存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">指令编码格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-R-type-Register"><span class="nav-number">3.1.</span> <span class="nav-text">1. R-type:(Register)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#All-Instructions"><span class="nav-number">3.1.0.1.</span> <span class="nav-text">All Instructions</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-I-type-Immediate"><span class="nav-number">3.2.</span> <span class="nav-text">2. I-type: (Immediate)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#All-instructions"><span class="nav-number">3.2.0.1.</span> <span class="nav-text">All instructions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Load-Instructions-are-also-I-type"><span class="nav-number">3.2.0.2.</span> <span class="nav-text">Load Instructions are also I-type</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-S-type-Store"><span class="nav-number">3.3.</span> <span class="nav-text">3. S-type: (Store)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#All-instructions-1"><span class="nav-number">3.3.0.1.</span> <span class="nav-text">All instructions</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-B-type-Branch"><span class="nav-number">3.4.</span> <span class="nav-text">4. B-type: (Branch)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Branching-Instruction-Usage"><span class="nav-number">3.4.1.</span> <span class="nav-text">Branching Instruction Usage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PC-Relative-Addressing"><span class="nav-number">3.4.2.</span> <span class="nav-text">PC-Relative Addressing</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Branch-Calculation"><span class="nav-number">3.4.2.1.</span> <span class="nav-text">Branch Calculation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Actural-RV32-Branch-Calculation"><span class="nav-number">3.4.2.2.</span> <span class="nav-text">Actural RV32 Branch Calculation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Determine-Offset"><span class="nav-number">3.4.2.3.</span> <span class="nav-text">Determine Offset</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#All-instructions-2"><span class="nav-number">3.4.2.4.</span> <span class="nav-text">All instructions</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Translation"><span class="nav-number">3.4.3.</span> <span class="nav-text">Translation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-U-type-Upper"><span class="nav-number">3.4.4.</span> <span class="nav-text">5. U-type: (Upper)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Long-Immediate"><span class="nav-number">3.4.5.</span> <span class="nav-text">Long Immediate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LUI-to-Create-Long-Immediate"><span class="nav-number">3.4.6.</span> <span class="nav-text">LUI to Create Long Immediate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AUIPC"><span class="nav-number">3.4.7.</span> <span class="nav-text">AUIPC</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-J-type-Jump"><span class="nav-number">3.5.</span> <span class="nav-text">6. J-type: (Jump)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Uses-of-JAL"><span class="nav-number">3.5.1.</span> <span class="nav-text">Uses of JAL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JALR-Instruction-I-Format"><span class="nav-number">3.5.2.</span> <span class="nav-text">JALR Instruction (I-Format)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Uses-of-JALR"><span class="nav-number">3.5.2.1.</span> <span class="nav-text">Uses of JALR</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Translation-Between-hexdecimal-and-instructions"><span class="nav-number">3.6.</span> <span class="nav-text">Translation Between hexdecimal and instructions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PC-Addressing"><span class="nav-number">4.</span> <span class="nav-text">PC-Addressing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Questions-on-PC-addressing"><span class="nav-number">4.1.</span> <span class="nav-text">Questions on PC-addressing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RISC-V-%E6%8C%87%E4%BB%A4%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="nav-number">4.2.</span> <span class="nav-text">RISC-V 指令寻址模式总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Arithmetic-Instruction"><span class="nav-number">5.</span> <span class="nav-text">算术运算指令 Arithmetic Instruction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#addi"><span class="nav-number">5.1.</span> <span class="nav-text">addi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LUI-Load-Upper-Immediate"><span class="nav-number">5.2.</span> <span class="nav-text">LUI (Load Upper Immediate)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AUIPC-add-upper-immediate-to-pc"><span class="nav-number">5.3.</span> <span class="nav-text">AUIPC (add upper immediate to pc)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LA%EF%BC%88Load-Address%EF%BC%89"><span class="nav-number">5.4.</span> <span class="nav-text">LA（Load Address）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MUL"><span class="nav-number">5.5.</span> <span class="nav-text">MUL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%85%B6%E4%BB%96%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="nav-number">5.6.</span> <span class="nav-text">基于算术运算指令实现的其他伪指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PC-Relative-amp-PC-Absolute"><span class="nav-number">5.7.</span> <span class="nav-text">PC-Relative &amp; PC-Absolute</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Shifting-Instructions"><span class="nav-number">6.</span> <span class="nav-text">移位运算指令 (Shifting Instructions)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%A7%BB%E4%BD%8D"><span class="nav-number">6.1.</span> <span class="nav-text">逻辑移位</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SLLI"><span class="nav-number">6.1.1.</span> <span class="nav-text">SLLI</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%A7%BB%E4%BD%8D"><span class="nav-number">6.2.</span> <span class="nav-text">算术移位</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB%E5%86%99%E6%8C%87%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">内存读写指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB-Load"><span class="nav-number">7.1.</span> <span class="nav-text">内存读 (Load)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%86%99-store"><span class="nav-number">7.2.</span> <span class="nav-text">内存写 (store)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4%EF%BC%88Unconditional-Jump-Instructions%EF%BC%89"><span class="nav-number">7.3.</span> <span class="nav-text">无条件跳转指令（Unconditional Jump Instructions）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-number">8.</span> <span class="nav-text">分支跳转指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4%EF%BC%88Conditional-Branch-Instructions%EF%BC%89"><span class="nav-number">8.1.</span> <span class="nav-text">条件分支指令（Conditional Branch Instructions）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RISC-V-Features-n-times-16-bit-Instructions"><span class="nav-number">8.2.</span> <span class="nav-text">RISC-V Features, $n\times 16$-bit Instructions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RISC-V-Immediates"><span class="nav-number">9.</span> <span class="nav-text">RISC-V Immediates</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#No-Subtract-Immediate"><span class="nav-number">9.1.</span> <span class="nav-text">No Subtract Immediate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Register-Zero"><span class="nav-number">9.2.</span> <span class="nav-text">Register Zero</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-Addresses-are-in-Bytes"><span class="nav-number">10.</span> <span class="nav-text">Memory Addresses are in Bytes</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        
+      </section>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/shuoO-24" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en, cn">
+    <link itemprop="mainEntityOfPage" href="http://shuoo-24.github.io/2021/06/30/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ibb.co/d6rcNrG">
+      <meta itemprop="name" content="Shuo">
+      <meta itemprop="description" content="世界献我以歌">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shuo的空间站">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RISC-V Instruction Overview
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-30 03:23:04" itemprop="dateCreated datePublished" datetime="2021-06-30T03:23:04-07:00">2021-06-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-17 13:41:23" itemprop="dateModified" datetime="2021-07-17T13:41:23-07:00">2021-07-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/UCB-61C/" itemprop="url" rel="index"><span itemprop="name">UCB-61C</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
 <p><em>References:</em></p>
 <ol>
 <li><em>【参考 1】: The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA, Document Version 20191213</em></li>
@@ -151,7 +328,7 @@
 <li><em>【参考 3】: How to Use Inline Assembly Language in C Code: <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc/Using-">https://gcc.gnu.org/onlinedocs/gcc/Using-</a> Assembly-Language-with-C.html</em></li>
 </ol>
 </blockquote>
-<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5he6eo1mj30xc0i8tku.jpg" alt="image-20210704113134394"></em></p>
+<p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5he6eo1mj30xc0i8tku.jpg" alt="image-20210704113134394"></em></p>
 <h2 id="语法介绍"><a href="#语法介绍" class="headerlink" title="语法介绍"></a>语法介绍</h2><ul>
 <li><p>An instruction consists of </p>
 <ul>
@@ -206,7 +383,7 @@
 <li><em>读写操作使用字节(Byte)为基本单位进行寻址; • RV32 可以访问最多 $2^32$ 个字节的内存空间。</em></li>
 </ul>
 <hr>
-<h2 id="指令编码格式"><a href="#指令编码格式" class="headerlink" title="指令编码格式"></a>指令编码格式</h2><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5fcais71j30wq0h4gys.jpg" alt="image-20210704102033367"></em></p>
+<h2 id="指令编码格式"><a href="#指令编码格式" class="headerlink" title="指令编码格式"></a>指令编码格式</h2><p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5fcais71j30wq0h4gys.jpg" alt="image-20210704102033367"></em></p>
 <ul>
 <li><p><em>`</em>func7`指有7个bytes**</p>
 <ul>
@@ -259,7 +436,7 @@
 </li>
 </ul>
 </li>
-<li><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs5fnyma1ij310o0kajx2.jpg" alt="image-20210704103146634" style="zoom:47%;" /></em></p>
+<li><p><em><img src="https://tva1.sinaimg.cn/large/008i3skNly1gs5fnyma1ij310o0kajx2.jpg" alt="image-20210704103146634" style="zoom:47%;" /></em></p>
 </li>
 <li><p>We can <strong>change value of <code>func3</code> and <code>func7</code></strong> to perform different instructions, and in total we can perform $(2^3\cdot2^7)=2^{10}=1024$ R-format instructions.</p>
 <ul>
@@ -267,8 +444,8 @@
 </ul>
 </li>
 </ul>
-<h5 id="All-Instructions"><a href="#All-Instructions" class="headerlink" title="All Instructions"></a>All Instructions</h5><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qudka3vj30jy0huq6b.jpg" alt="image-20210706102937190"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qulweclj30ji068jsm.jpg" alt="image-20210706102953167"></p>
+<h5 id="All-Instructions"><a href="#All-Instructions" class="headerlink" title="All Instructions"></a>All Instructions</h5><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qudka3vj30jy0huq6b.jpg" alt="image-20210706102937190"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qulweclj30ji068jsm.jpg" alt="image-20210706102953167"></p>
 <h3 id="2-I-type-Immediate"><a href="#2-I-type-Immediate" class="headerlink" title="2. I-type: (Immediate)"></a>2. I-type: (Immediate)</h3><ul>
 <li><em>每条指令除了带有<strong>两个寄存器</strong>参数外，还带有一个<strong>立即数</strong>参数（用来表示整数）</em></li>
 <li>Compare: <strong>add rd,rs1,rs2</strong> with <strong>addi rd, rs1, imm</strong><ul>
@@ -278,22 +455,22 @@
 </li>
 <li>Ideally, RISC-V would have only one instruction format (for simplicity): unfortunately, we need to compromise</li>
 <li>Define new instruction format that is mostly consistent with R-format</li>
-<li>Notice if instruction has immediate, then uses <strong>at most 2 registers</strong> (one source, one destination)<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gduzha0j31220l6djh.jpg" alt="image-20210704105640491" style="zoom: 33%;" /></li>
+<li>Notice if instruction has immediate, then uses <strong>at most 2 registers</strong> (one source, one destination)<img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gduzha0j31220l6djh.jpg" alt="image-20210704105640491" style="zoom: 33%;" /></li>
 <li><code>immediate</code>: <ul>
-<li><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gej2nfej310e0hajut.jpg" alt="image-20210704105718907" style="zoom: 33%;" />*</li>
+<li><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gej2nfej310e0hajut.jpg" alt="image-20210704105718907" style="zoom: 33%;" />*</li>
 </ul>
 </li>
 <li>When the I-type format is used for load instructions, the <strong>immediate represents a byte offset</strong>, so the load doubleword instruction can refer to any doubleword within a region of $±\;2^{11}$ or 2048 bytes ($±\;2^8$ or 256 doublewords) of the base address in the base register <code>rd</code></li>
 </ul>
-<h5 id="All-instructions"><a href="#All-instructions" class="headerlink" title="All instructions"></a>All instructions</h5><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs5gg1g2o8j60zi0fsqdf02.jpg" alt="image-20210704105845398"></em></p>
+<h5 id="All-instructions"><a href="#All-instructions" class="headerlink" title="All instructions"></a>All instructions</h5><p><em><img src="https://tva1.sinaimg.cn/large/008i3skNly1gs5gg1g2o8j60zi0fsqdf02.jpg" alt="image-20210704105845398"></em></p>
 <ul>
 <li><em><code>srai</code>:  <u>shift right arithmetic (srai</u>). This variant is similar to srli, except rather than filling the vacated bits on the left with zeros, it <em>*fills them with copies of the old sign bit.</em></em> </li>
 </ul>
-<h5 id="Load-Instructions-are-also-I-type"><a href="#Load-Instructions-are-also-I-type" class="headerlink" title="Load Instructions are also I-type"></a>Load Instructions are also I-type</h5><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gr6txumj31040joqcz.jpg" alt="image-20210704110929274"></em></p>
+<h5 id="Load-Instructions-are-also-I-type"><a href="#Load-Instructions-are-also-I-type" class="headerlink" title="Load Instructions are also I-type"></a>Load Instructions are also I-type</h5><p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gr6txumj31040joqcz.jpg" alt="image-20210704110929274"></em></p>
 <ul>
 <li><code>opcode</code>: <strong>0000011</strong></li>
 </ul>
-<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h1c25qbj30xa06mjs7.jpg" alt="image-20210704111914066" style="zoom:50%;" /></em></p>
+<p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h1c25qbj30xa06mjs7.jpg" alt="image-20210704111914066" style="zoom:50%;" /></em></p>
 <ul>
 <li>The 12-bit signed immediate is added to the base address in register <code>rsl</code> to form the memory address<ul>
 <li>This is very similar to the add-immediate operation but used to create address, not to create final result</li>
@@ -303,7 +480,7 @@
 </ul>
 <h3 id="3-S-type-Store"><a href="#3-S-type-Store" class="headerlink" title="3. S-type: (Store)"></a>3. S-type: (Store)</h3><ul>
 <li>每条指令除了带有<strong>两个寄存器</strong>参数外（无<code>sd</code>），还带有一个<strong>立即数</strong>参数(宽度为 12 bits，但 fields 的组织方式不同于 I-type，分为两个field来存储一个immediate)</li>
-<li><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h34mr9lj30wq03emxl.jpg" alt="image-20210704112057665"></em></p>
+<li><p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h34mr9lj30wq03emxl.jpg" alt="image-20210704112057665"></em></p>
 </li>
 <li><p>Store needs to read two registers</p>
 <ul>
@@ -316,11 +493,11 @@
 <li><strong>Note</strong>: stores don’t write a value to the register file, no <code>rd</code>!</li>
 <li>RISC-V design decision is move low 5 bits of <code>immediate</code> to where <code>rd</code> field was in other instructions – keep <code>rs1</code>/<code>rs2</code> fields in same place </li>
 <li>register names more critical than immediate bits in hardware design</li>
-<li><strong>Example</strong>: <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h5fkiuwj30wg09iwh4.jpg" alt="image-20210704112310134" style="zoom:33%;" /></li>
+<li><strong>Example</strong>: <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h5fkiuwj30wg09iwh4.jpg" alt="image-20210704112310134" style="zoom:33%;" /></li>
 </ul>
-<h5 id="All-instructions-1"><a href="#All-instructions-1" class="headerlink" title="All instructions"></a>All instructions</h5><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jf9er3uj31000gkgrh.jpg" alt="image-20210706061256759"></p>
-<h3 id="4-B-type-Branch"><a href="#4-B-type-Branch" class="headerlink" title="4. B-type: (Branch)"></a>4. B-type: (Branch)</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7j9rfyv1j30zk07qdgz.jpg" alt="image-20210706060738252"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k2cigqrj319e06i0ya.jpg" alt="image-20210706063508120"></p>
+<h5 id="All-instructions-1"><a href="#All-instructions-1" class="headerlink" title="All instructions"></a>All instructions</h5><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jf9er3uj31000gkgrh.jpg" alt="image-20210706061256759"></p>
+<h3 id="4-B-type-Branch"><a href="#4-B-type-Branch" class="headerlink" title="4. B-type: (Branch)"></a>4. B-type: (Branch)</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7j9rfyv1j30zk07qdgz.jpg" alt="image-20210706060738252"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k2cigqrj319e06i0ya.jpg" alt="image-20210706063508120"></p>
 <ul>
 <li><p>每条指令除了带有<strong>两个寄存器</strong>参数外（无<code>sd</code>），还带有一个<strong>立即数</strong>参数(宽度 为 12 bits，但取值为 2 的倍数)。</p>
 </li>
@@ -402,12 +579,12 @@
 </li>
 </ul>
 <h5 id="Determine-Offset"><a href="#Determine-Offset" class="headerlink" title="Determine Offset"></a>Determine Offset</h5><ul>
-<li><p><strong>Example</strong>: <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jdpwn7ij30rs0a4dhg.jpg" alt="image-20210706061127996" style="zoom: 33%;" /></p>
+<li><p><strong>Example</strong>: <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jdpwn7ij30rs0a4dhg.jpg" alt="image-20210706061127996" style="zoom: 33%;" /></p>
 <ul>
 <li><p>==Branch <strong>offset</strong> = <strong>4</strong>×<strong>32-bit instructions = 16 bytes</strong>==</p>
 <p>(Branch with offset of 0, branches to itself)</p>
 </li>
-<li><p><strong>Encoding</strong>:<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jidrvq4j30yo06u764.jpg" alt="image-20210706061556361"></p>
+<li><p><strong>Encoding</strong>:<img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jidrvq4j30yo06u764.jpg" alt="image-20210706061556361"></p>
 <ul>
 <li>Opocode for <code>BRANCH</code> <code>beq</code>: 1100011</li>
 <li><code>rs1</code>: 19 in binary</li>
@@ -421,7 +598,7 @@
 <li>$0000000010000$, <code>imm[0]</code>is discarded, always zero</li>
 </ul>
 </li>
-<li><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jtma6ngj31380ay41w.jpg" alt="image-20210706062644563"></li>
+<li><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jtma6ngj31380ay41w.jpg" alt="image-20210706062644563"></li>
 </ul>
 </li>
 </ul>
@@ -430,7 +607,7 @@
 <h5 id="All-instructions-2"><a href="#All-instructions-2" class="headerlink" title="All instructions"></a>All instructions</h5><ul>
 <li>Opcode is the same of all branches: $1100011$</li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jb34hw9j310i0pm10o.jpg" alt="image-20210706060855809"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jb34hw9j310i0pm10o.jpg" alt="image-20210706060855809"></p>
 <h4 id="Translation"><a href="#Translation" class="headerlink" title="Translation"></a>Translation</h4><ul>
 <li>Retrieve <code>imm</code> value:<ul>
 <li>address of <code>bne</code> - address of label position</li>
@@ -439,7 +616,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="5-U-type-Upper"><a href="#5-U-type-Upper" class="headerlink" title="5. U-type: (Upper)"></a>5. U-type: (Upper)</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7ka4caqhj30t806g3z6.jpg" alt="image-20210706064235075"></p>
+<h4 id="5-U-type-Upper"><a href="#5-U-type-Upper" class="headerlink" title="5. U-type: (Upper)"></a>5. U-type: (Upper)</h4><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7ka4caqhj30t806g3z6.jpg" alt="image-20210706064235075"></p>
 <p>每条指令含有一个寄存器参数再加上一个立即数参数(宽度为 20 bits，用于表示一个<strong>立即数的高 20 位</strong>)</p>
 <h4 id="Long-Immediate"><a href="#Long-Immediate" class="headerlink" title="Long Immediate"></a>Long Immediate</h4><ul>
 <li><p>We want to load a memory address into a register so we can jump to it later—how can we do that in one instruction? </p>
@@ -465,17 +642,17 @@
 </li>
 <li><p>Together with an <strong>addi</strong> to set low 12 bits, can create any 32-bit value in a register using two instructions (<strong>lui</strong>/<strong>addi</strong>).</p>
 </li>
-<li><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kar8s5kj30s80300tr.jpg" alt="image-20210706064313290" style="zoom:67%;" /></p>
+<li><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kar8s5kj30s80300tr.jpg" alt="image-20210706064313290" style="zoom:67%;" /></p>
 <ul>
 <li>LUI puts 0x87654 into the upper 20 bits(5 nibbles) and <code>addi</code> adds 0x321 to it. </li>
 </ul>
 </li>
-<li><p><strong>addi </strong>12-bit immediate is always <strong>sign-extended</strong>, if <strong>top bit is set</strong>, will subtract -1 from upper 20 bits: <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs7kifvy3nj30qy03it96.jpg" alt="image-20210706065036469"></p>
+<li><p><strong>addi </strong>12-bit immediate is always <strong>sign-extended</strong>, if <strong>top bit is set</strong>, will subtract -1 from upper 20 bits: <img src="https://tva1.sinaimg.cn/large/008i3skNly1gs7kifvy3nj30qy03it96.jpg" alt="image-20210706065036469"></p>
 </li>
-<li><strong>Pre-increment</strong> value placed in upper 20 bits, if sign bit will be set on immediate in lower 12 bits:<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kiwsgy9j30rq066dgi.jpg" alt="image-20210706065102507" style="zoom:50%;" /></li>
+<li><strong>Pre-increment</strong> value placed in upper 20 bits, if sign bit will be set on immediate in lower 12 bits:<img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kiwsgy9j30rq066dgi.jpg" alt="image-20210706065102507" style="zoom:50%;" /></li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kd2qphzj30r20ekgon.jpg" alt="image-20210706064526385" style="zoom:37%;" /></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kdbv5y0j30r209w0tr.jpg" alt="image-20210706064541923" style="zoom:37%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kd2qphzj30r20ekgon.jpg" alt="image-20210706064526385" style="zoom:37%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kdbv5y0j30r209w0tr.jpg" alt="image-20210706064541923" style="zoom:37%;" /></p>
 <ul>
 <li><p>Assembler pseudo-op handles all of this:</p>
 <p><code>li x10, 0xDEADBEEF # Creates two instructions</code></p>
@@ -489,7 +666,7 @@
 <li><p><code>Label: AUIPC x10, 0 # Puts address of Label in x10</code></p>
 </li>
 </ul>
-<h3 id="6-J-type-Jump"><a href="#6-J-type-Jump" class="headerlink" title="6. J-type: (Jump)"></a>6. J-type: (Jump)</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lfqfncbj30yi04wdge.jpg" alt="image-20210706072234463"></p>
+<h3 id="6-J-type-Jump"><a href="#6-J-type-Jump" class="headerlink" title="6. J-type: (Jump)"></a>6. J-type: (Jump)</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lfqfncbj30yi04wdge.jpg" alt="image-20210706072234463"></p>
 <p>每条指令含有<strong>一个寄存器</strong>参数再加上<strong>一个立即数</strong>参数(宽度为 20 bits)</p>
 <ul>
 <li><p><strong>jal</strong> saves PC+4 in register <strong>rd</strong> (the return address)</p>
@@ -516,7 +693,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="JALR-Instruction-I-Format"><a href="#JALR-Instruction-I-Format" class="headerlink" title="JALR Instruction (I-Format)"></a>JALR Instruction (I-Format)</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lyaw09sj30x6058gm7.jpg" alt="image-20210706074026909"></p>
+<h4 id="JALR-Instruction-I-Format"><a href="#JALR-Instruction-I-Format" class="headerlink" title="JALR Instruction (I-Format)"></a>JALR Instruction (I-Format)</h4><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lyaw09sj30x6058gm7.jpg" alt="image-20210706074026909"></p>
 <ul>
 <li><strong>jalr rd, rs, immediate</strong><ul>
 <li>Writes PC+4 to <code>rd</code> (<strong>return address</strong>)</li>
@@ -551,9 +728,9 @@
 </ul>
 </li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r27qrlfj30r209imyo.jpg" alt="image-20210706103710470" style="zoom:50%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r27qrlfj30r209imyo.jpg" alt="image-20210706103710470" style="zoom:50%;" /></p>
 <hr>
-<h3 id="Translation-Between-hexdecimal-and-instructions"><a href="#Translation-Between-hexdecimal-and-instructions" class="headerlink" title="Translation Between hexdecimal and instructions"></a>Translation Between hexdecimal and instructions</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r0a6qpkj30is0rojxv.jpg" alt="image-20210706103520577"></p>
+<h3 id="Translation-Between-hexdecimal-and-instructions"><a href="#Translation-Between-hexdecimal-and-instructions" class="headerlink" title="Translation Between hexdecimal and instructions"></a>Translation Between hexdecimal and instructions</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r0a6qpkj30is0rojxv.jpg" alt="image-20210706103520577"></p>
 <hr>
 <h2 id="PC-Addressing"><a href="#PC-Addressing" class="headerlink" title="PC-Addressing"></a>PC-Addressing</h2><h3 id="Questions-on-PC-addressing"><a href="#Questions-on-PC-addressing" class="headerlink" title="Questions on PC-addressing"></a>Questions on PC-addressing</h3><ul>
 <li><p><em>Does the value in branch immediate field change if we <strong>move</strong> the code?</em> </p>
@@ -567,7 +744,7 @@
 <li><p><em>What do we do if destination is $&gt;2^{10}$ instructions away from branch?</em> 如何解决更远距离的跳转？</p>
 <ul>
 <li><p>Other instructions save us:</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k122fq5j30nq03sab2.jpg" alt="image-20210706063353468" style="zoom:33%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k122fq5j30nq03sab2.jpg" alt="image-20210706063353468" style="zoom:33%;" /></p>
 </li>
 <li><p>The jump will have a much longer reach than branches</p>
 </li>
@@ -578,7 +755,7 @@
 <h3 id="RISC-V-指令寻址模式总结"><a href="#RISC-V-指令寻址模式总结" class="headerlink" title="RISC-V 指令寻址模式总结"></a>RISC-V 指令寻址模式总结</h3><ul>
 <li>寻址模式指的是指令中定位<strong>操作数(operand)</strong>或者<strong>地址</strong>的方式</li>
 </ul>
-<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs5f2f5ei6j314c0io7dz.jpg" alt="image-20210704101104930"></em></p>
+<p><em><img src="https://tva1.sinaimg.cn/large/008i3skNly1gs5f2f5ei6j314c0io7dz.jpg" alt="image-20210704101104930"></em></p>
 <hr>
 <h2 id="算术运算指令-Arithmetic-Instruction"><a href="#算术运算指令-Arithmetic-Instruction" class="headerlink" title="算术运算指令 Arithmetic Instruction"></a>算术运算指令 Arithmetic Instruction</h2><div class="table-container">
 <table>
@@ -697,7 +874,7 @@
 </tbody>
 </table>
 </div>
-<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5hhxrn4sj30uw0cwn3r.jpg" alt="image-20210704113511874" style="zoom:50%;" /></em></p>
+<p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5hhxrn4sj30uw0cwn3r.jpg" alt="image-20210704113511874" style="zoom:50%;" /></em></p>
 <h3 id="LUI-Load-Upper-Immediate"><a href="#LUI-Load-Upper-Immediate" class="headerlink" title="LUI (Load Upper Immediate)"></a>LUI (Load Upper Immediate)</h3><div class="table-container">
 <table>
 <thead>
@@ -853,7 +1030,7 @@
 <li>左移 — 乘法</li>
 <li><code>SLL</code>, <code>SRL</code>, and <code>SRA</code> perform logical left, logical right, and arithmetic right shifts on the value in register rs1 by the shift amount held in the <strong>lower 5 bits of register <code>rs2</code></strong>.</li>
 </ul>
-<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs6ai5jp36j30xs0dmdjl.jpg" alt="image-20210705041842923"></em></p>
+<p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs6ai5jp36j30xs0dmdjl.jpg" alt="image-20210705041842923"></em></p>
 <h4 id="SLLI"><a href="#SLLI" class="headerlink" title="SLLI"></a>SLLI</h4><ul>
 <li><p>Used to <strong>access elements in the array</strong></p>
 </li>
@@ -873,14 +1050,14 @@
 </ul>
 </li>
 </ul>
-<h3 id="算术移位"><a href="#算术移位" class="headerlink" title="算术移位"></a>算术移位</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs9xhfvc1oj31020c0ady.jpg" alt="image-20210708075032310" style="zoom:80%;" /></p>
+<h3 id="算术移位"><a href="#算术移位" class="headerlink" title="算术移位"></a>算术移位</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs9xhfvc1oj31020c0ady.jpg" alt="image-20210708075032310" style="zoom:80%;" /></p>
 <hr>
 <h2 id="内存读写指令"><a href="#内存读写指令" class="headerlink" title="内存读写指令"></a>内存读写指令</h2><h3 id="内存读-Load"><a href="#内存读-Load" class="headerlink" title="内存读 (Load)"></a>内存读 (Load)</h3><ul>
 <li><code>sw rs2, imm(rs1)</code><ul>
 <li>把<code>rs2</code>读写到地址为<code>imm+rs1</code>的内存里</li>
 </ul>
 </li>
-<li><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7e4qwbp0j30zm0ckgry.jpg" alt="image-20210706030944037"></em></p>
+<li><p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7e4qwbp0j30zm0ckgry.jpg" alt="image-20210706030944037"></em></p>
 </li>
 <li><p>用于 function call 开头 (prologue)</p>
 </li>
@@ -893,7 +1070,7 @@
 <li>把数据往外放</li>
 <li>寄存器里有四个字节，外面有一个字节</li>
 </ul>
-<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs6f456bcij310a0dc0yo.jpg" alt="image-20210705065812410"></em></p>
+<p><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs6f456bcij310a0dc0yo.jpg" alt="image-20210705065812410"></em></p>
 <hr>
 <h3 id="无条件跳转指令（Unconditional-Jump-Instructions）"><a href="#无条件跳转指令（Unconditional-Jump-Instructions）" class="headerlink" title="无条件跳转指令（Unconditional Jump Instructions）"></a>无条件跳转指令（Unconditional Jump Instructions）</h3><p>如果跳转后不需要返回，可以利用 x0 代替 JAL 和 JALR 中的 RD</p>
 <div class="table-container">
@@ -924,7 +1101,7 @@
 </div>
 <hr>
 <h2 id="分支跳转指令"><a href="#分支跳转指令" class="headerlink" title="分支跳转指令"></a>分支跳转指令</h2><h3 id="条件分支指令（Conditional-Branch-Instructions）"><a href="#条件分支指令（Conditional-Branch-Instructions）" class="headerlink" title="条件分支指令（Conditional Branch Instructions）"></a>条件分支指令（Conditional Branch Instructions）</h3><ul>
-<li><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7egavjmsj30wq0g4qbr.jpg" alt="image-20210706032055663"></em></li>
+<li><em><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7egavjmsj30wq0g4qbr.jpg" alt="image-20210706032055663"></em></li>
 </ul>
 <div class="table-container">
 <table>
@@ -1068,189 +1245,133 @@
 <li>Word address is same as address of rightmost byte – least-significant byte (i.e. Little-endian convention)</li>
 </ul>
 
+    </div>
 
-<div class="article-footer fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
+    
+    
+    
 
-</article>
+    <footer class="post-footer">
+          
 
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><div class="line"></div><a id="prev" href="/2021/06/30/%E7%9F%A5%E8%AF%86%E8%BF%9B%E6%AD%A5%E7%9A%84%E7%8A%80%E5%88%A9%E5%B7%A5%E5%85%B7%EF%BC%9A%E7%90%86%E8%AE%BA%E7%9A%84%E6%94%B6%E7%9B%8A%E5%92%8C%E6%88%90%E6%9C%AC/">知识进步的犀利工具：理论的收益和成本<span class="note">Newer</span></a><div class="line"></div><a id="more" href="/archives">All Articles<span class="note">Archives</span></a></section></div>
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Shuo
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="http://shuoo-24.github.io/2021/06/30/hello-world/" title="RISC-V Instruction Overview">http://shuoo-24.github.io/2021/06/30/hello-world/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
 
+          <div class="post-tags">
+              <a href="/tags/Computer-Architecture/" rel="tag"># Computer Architecture</a>
+              <a href="/tags/RISC-V/" rel="tag"># RISC-V</a>
+              <a href="/tags/ISA/" rel="tag"># ISA</a>
+          </div>
 
+        
 
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/30/%E7%9F%A5%E8%AF%86%E8%BF%9B%E6%AD%A5%E7%9A%84%E7%8A%80%E5%88%A9%E5%B7%A5%E5%85%B7%EF%BC%9A%E7%90%86%E8%AE%BA%E7%9A%84%E6%94%B6%E7%9B%8A%E5%92%8C%E6%88%90%E6%9C%AC/" rel="next" title="知识进步的犀利工具：理论的收益和成本">
+                  知识进步的犀利工具：理论的收益和成本 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
 
 
 
       
-<footer class="page-footer fs12"><hr><div class="text"><p>All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</p>
-<p>This site was deployed by <a href="http://shuoO-24.github.io/">@Shuo</a> using <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.2.1">Stellar</a>.</p>
-</div></footer>
 
-      <div class='float-panel mobile-only blur' style='display:none'>
-  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
-    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
-  </button>
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shuo</span>
 </div>
 
     </div>
-  </div>
-  <div class='scripts'>
-    <script type="text/javascript">
-  stellar = {
-    // 懒加载 css https://github.com/filamentgroup/loadCSS
-    loadCSS: (href, before, media, attributes) => {
-      var doc = window.document;
-      var ss = doc.createElement("link");
-      var ref;
-      if (before) {
-        ref = before;
-      } else {
-        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
-        ref = refs[refs.length - 1];
-      }
-      var sheets = doc.styleSheets;
-      if (attributes) {
-        for (var attributeName in attributes) {
-          if (attributes.hasOwnProperty(attributeName)) {
-            ss.setAttribute(attributeName, attributes[attributeName]);
-          }
-        }
-      }
-      ss.rel = "stylesheet";
-      ss.href = href;
-      ss.media = "only x";
-      function ready(cb) {
-        if (doc.body) {
-          return cb();
-        }
-        setTimeout(function () {
-          ready(cb);
-        });
-      }
-      ready(function () {
-        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
-      });
-      var onloadcssdefined = function (cb) {
-        var resolvedHref = ss.href;
-        var i = sheets.length;
-        while (i--) {
-          if (sheets[i].href === resolvedHref) {
-            return cb();
-          }
-        }
-        setTimeout(function () {
-          onloadcssdefined(cb);
-        });
-      };
-      function loadCB() {
-        if (ss.addEventListener) {
-          ss.removeEventListener("load", loadCB);
-        }
-        ss.media = media || "all";
-      }
-      if (ss.addEventListener) {
-        ss.addEventListener("load", loadCB);
-      }
-      ss.onloadcssdefined = onloadcssdefined;
-      onloadcssdefined(loadCB);
-      return ss;
-    },
-
-    // 从 butterfly 和 volantis 获得灵感
-    loadScript: (src, opt) => new Promise((resolve, reject) => {
-      var script = document.createElement('script');
-      script.src = src;
-      if (opt) {
-        for (let key of Object.keys(opt)) {
-          script[key] = opt[key]
-        }
-      } else {
-        // 默认异步，如果需要同步，第二个参数传入 {} 即可
-        script.async = true
-      }
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    }),
-
-    // https://github.com/jerryc127/hexo-theme-butterfly
-    jQuery: (fn) => {
-      if (typeof jQuery === 'undefined') {
-        stellar.loadScript(stellar.plugins.jQuery).then(fn)
-      } else {
-        fn()
-      }
-    }
-  };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.2.1';
-  stellar.config = {
-    date_suffix: {
-      just: 'Just',
-      min: 'minutes ago',
-      hour: 'hours ago',
-      day: 'days ago',
-      month: 'months ago',
-    },
-  };
-
-  // required plugins (only load if needs)
-  stellar.plugins = {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-  };
-
-  // optional plugins
-  if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
-  }
-  if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-</script>
-
-<!-- required -->
+  </footer>
 
   
-<script src="/js/main.js" async></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
 
 
 
-<!-- optional -->
 
 
 
-<!-- inject -->
 
 
-  </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

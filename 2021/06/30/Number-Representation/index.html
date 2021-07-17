@@ -1,26 +1,30 @@
 <!DOCTYPE html>
-<html lang='en, cn'>
-
+<html lang="en, cn">
 <head>
-  <meta name="generator" content="Hexo 5.4.0">
-  <meta charset="utf-8">
-  
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/images/manifest.json">
+  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-  <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="/css/main.css">
 
-  <meta name="renderer" content="webkit">
-  <meta name="force-rendering" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="HandheldFriendly" content="True" >
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="theme-color" content="#f8f8f8">
-  <title>Number Representation - Shuo的空间站</title>
 
-  
-    <meta name="description" content="Reading Materials and Tutoring Online: Learn Binary Negative Numbers and 2’s Complement https:&#x2F;&#x2F;www.cs.cornell.edu&#x2F;~tomf&#x2F;notes&#x2F;cps104&#x2F;twoscomp.html 1’s &amp; 2’s Complement Calculator 你所不知道的 C 語言: 浮點">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"shuoo-24.github.io","root":"/","scheme":"Gemini","version":"8.0.0","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="Reading Materials and Tutoring Online: Learn Binary Negative Numbers and 2’s Complement https:&#x2F;&#x2F;www.cs.cornell.edu&#x2F;~tomf&#x2F;notes&#x2F;cps104&#x2F;twoscomp.html 1’s &amp; 2’s Complement Calculator 你所不知道的 C 語言: 浮點">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Number Representation">
 <meta property="og:url" content="http://shuoo-24.github.io/2021/06/30/Number-Representation/index.html">
@@ -52,78 +56,245 @@
 <meta property="article:tag" content="Computer Arithmetic">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohxre4cj30b60ds0t5.jpg">
-  
+
+
+<link rel="canonical" href="http://shuoo-24.github.io/2021/06/30/Number-Representation/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en, cn'
+  };
+</script>
+
+  <title>Number Representation | Shuo的空间站</title>
   
 
-  <!-- feed -->
-  
 
-  
-    
-<link rel="stylesheet" href="/css/main.css">
 
-  
 
-  
-  
-  
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 <!-- hexo injector head_end end --></head>
 
-<body>
-  
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
 
-  <div class='l_body' id='start'>
-    <aside class='l_left'>
-    
+  <div class="site-meta">
 
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Shuo的空间站</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Lavender Spacecraft🪐✨</p>
+      <img class="custom-logo-image" src="/source/images/favicon_io/apple-touch-icon.png" alt="Shuo的空间站">
+  </div>
 
-<header class="header">
-
-<div class="logo-wrap"><a class="title" href="/">Shuo的空间站</a></div><nav class="menu dis-select"></nav></header>
-<div class='widgets'>
-  
-    
-      
-      
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">TOC</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%9B%BB%E8%85%A6%E4%B8%8D%E7%94%A8%E5%8D%81%E9%80%B2%E4%BD%8D%E8%80%8C%E7%94%A8%E4%BA%8C%E9%80%B2%E4%BD%8D%EF%BC%9F"><span class="toc-text">為什麼電腦不用十進位而用二進位？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%BB%E5%AD%90%E9%9B%BB%E8%B7%AF"><span class="toc-text">電子電路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B8%E4%BD%8D%E9%9B%BB%E5%AD%90%E5%AD%B8"><span class="toc-text">數位電子學</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Summary-of-Terminologies"><span class="toc-text">Summary of Terminologies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Input-Analog-%E2%80%94-Digital"><span class="toc-text">Data Input Analog — Digital</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bit-can-represent-anything"><span class="toc-text">Bit can represent anything</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bit"><span class="toc-text">bit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#byte"><span class="toc-text">byte</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Great-Idea"><span class="toc-text">Great Idea</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Key-Takeaway"><span class="toc-text">Key Takeaway</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Conversion"><span class="toc-text">Base Conversion</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Decimal-Hex"><span class="toc-text">Binary, Decimal, Hex</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Theorem-of-converting-any-base-into-decimal"><span class="toc-text">Theorem of converting any base into decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal"><span class="toc-text">Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-to-Decimal-Hexadecimal"><span class="toc-text">Binary to Decimal&#x2F;Hexadecimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexadecimal"><span class="toc-text">Hexadecimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal-to-Binary"><span class="toc-text">Decimal to Binary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Decimal-to-Hexadecimal"><span class="toc-text">Decimal to Hexadecimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-to-Hexadecimal"><span class="toc-text">Binary to Hexadecimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hexadecimal-to-Binary"><span class="toc-text">Hexadecimal to Binary</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nibble-and-Byte"><span class="toc-text">Nibble and Byte</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Nibble-4-Bits"><span class="toc-text">Nibble&#x2F;4 Bits</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Byte-8-Bits"><span class="toc-text">Byte&#x2F;8 Bits</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Arithematics"><span class="toc-text">Arithematics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Addition"><span class="toc-text">Addition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Subtraction"><span class="toc-text">Subtraction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Multiplication"><span class="toc-text">Multiplication</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Overflow"><span class="toc-text">Overflow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overflow-of-Unsigned"><span class="toc-text">Overflow of Unsigned</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overflow-of-Signed"><span class="toc-text">Overflow of Signed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overflow-in-Bias-Form"><span class="toc-text">Overflow in Bias Form</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overflow-in-Two%E2%80%99s-Complement"><span class="toc-text">Overflow in Two’s Complement</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-for-Integer-Overflow"><span class="toc-text">Check for Integer Overflow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-1"><span class="toc-text">Method 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Method-2"><span class="toc-text">Method 2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsigned-In-C"><span class="toc-text">Unsigned In C</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Complement-the-bits"><span class="toc-text">Complement the bits</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary%E2%80%99s-Sign"><span class="toc-text">Binary’s Sign</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sign-and-Magnitude"><span class="toc-text">Sign and Magnitude</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#One%E2%80%99s-Complement-%E5%8F%8D%E7%A0%81"><span class="toc-text">One’s Complement 反码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#To-Represent-Sign"><span class="toc-text">To Represent Sign</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Conversion"><span class="toc-text">Conversion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shortcomings-of-One%E2%80%99s-Complement-Sign-amp-Magnitude"><span class="toc-text">Shortcomings of One’s Complement (Sign &amp; Magnitude)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Binary-Odometer"><span class="toc-text">Binary Odometer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Two%E2%80%99s-Complement-%E8%A1%A5%E7%A0%81"><span class="toc-text">Two’s Complement 补码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Property"><span class="toc-text">Property</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Advantages"><span class="toc-text">Advantages</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Overflow-1"><span class="toc-text">Overflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Intuitive-Understanding"><span class="toc-text">Intuitive Understanding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Converting-Two%E2%80%99s-Complement-to-Decimal"><span class="toc-text">Converting Two’s Complement to Decimal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Range"><span class="toc-text">Range</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Addition-1"><span class="toc-text">Addition</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Biased-Encoding"><span class="toc-text">Biased Encoding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="toc-text">数据类型的大小</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sizeof-%E5%92%8C-strlen-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">sizeof 和 strlen 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#strlen%E7%94%A8%E6%B3%95"><span class="toc-text">strlen用法</span></a></li></ol></li></ol></div></div></div>
-
-    
-  
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
 
-    </aside>
-    <div class='l_main'>
-      
 
-      
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-commonweal">
+
+    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
+
+  </li>
+  </ul>
+</nav>
 
 
-  <div class='bread-nav fs12'>
+
+
+</div>
+        
   
-    
-    <div id='breadcrumb'>
-      <a class='cap breadcrumb' href='/'>Home</a>
-      <span class="sep"></span>
-      <a class='cap breadcrumb' href='/'>Blog</a>
-      
-        <span class="sep"></span>
-        <a class="cap breadcrumb-link" href="/categories/UCB-61C/">UCB-61C</a>
-      
-    </div>
-    <div id='post-meta'>
-      Posted on&nbsp;<time datetime='2021-06-30T14:47:43.000Z'>2021-06-30</time>
-    </div>
-  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
+  <aside class="sidebar">
 
-<article class='content md post'>
-<h1 class="article-title"><span>Number Representation</span></h1>
-<blockquote>
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%9B%BB%E8%85%A6%E4%B8%8D%E7%94%A8%E5%8D%81%E9%80%B2%E4%BD%8D%E8%80%8C%E7%94%A8%E4%BA%8C%E9%80%B2%E4%BD%8D%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">為什麼電腦不用十進位而用二進位？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%BB%E5%AD%90%E9%9B%BB%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">電子電路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B8%E4%BD%8D%E9%9B%BB%E5%AD%90%E5%AD%B8"><span class="nav-number">1.2.</span> <span class="nav-text">數位電子學</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summary-of-Terminologies"><span class="nav-number">2.</span> <span class="nav-text">Summary of Terminologies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Input-Analog-%E2%80%94-Digital"><span class="nav-number">3.</span> <span class="nav-text">Data Input Analog — Digital</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bit-can-represent-anything"><span class="nav-number">4.</span> <span class="nav-text">Bit can represent anything</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bit"><span class="nav-number">4.1.</span> <span class="nav-text">bit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#byte"><span class="nav-number">4.2.</span> <span class="nav-text">byte</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Great-Idea"><span class="nav-number">4.3.</span> <span class="nav-text">Great Idea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-Takeaway"><span class="nav-number">4.4.</span> <span class="nav-text">Key Takeaway</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base-Conversion"><span class="nav-number">5.</span> <span class="nav-text">Base Conversion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Decimal-Hex"><span class="nav-number">5.1.</span> <span class="nav-text">Binary, Decimal, Hex</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Theorem-of-converting-any-base-into-decimal"><span class="nav-number">5.2.</span> <span class="nav-text">Theorem of converting any base into decimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decimal"><span class="nav-number">5.3.</span> <span class="nav-text">Decimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-to-Decimal-Hexadecimal"><span class="nav-number">5.4.</span> <span class="nav-text">Binary to Decimal&#x2F;Hexadecimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexadecimal"><span class="nav-number">5.5.</span> <span class="nav-text">Hexadecimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decimal-to-Binary"><span class="nav-number">5.6.</span> <span class="nav-text">Decimal to Binary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decimal-to-Hexadecimal"><span class="nav-number">5.7.</span> <span class="nav-text">Decimal to Hexadecimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-to-Hexadecimal"><span class="nav-number">5.8.</span> <span class="nav-text">Binary to Hexadecimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexadecimal-to-Binary"><span class="nav-number">5.9.</span> <span class="nav-text">Hexadecimal to Binary</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nibble-and-Byte"><span class="nav-number">6.</span> <span class="nav-text">Nibble and Byte</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nibble-4-Bits"><span class="nav-number">6.1.</span> <span class="nav-text">Nibble&#x2F;4 Bits</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Byte-8-Bits"><span class="nav-number">6.2.</span> <span class="nav-text">Byte&#x2F;8 Bits</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arithematics"><span class="nav-number">7.</span> <span class="nav-text">Arithematics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Addition"><span class="nav-number">7.1.</span> <span class="nav-text">Addition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subtraction"><span class="nav-number">7.2.</span> <span class="nav-text">Subtraction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiplication"><span class="nav-number">7.3.</span> <span class="nav-text">Multiplication</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Overflow"><span class="nav-number">8.</span> <span class="nav-text">Overflow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Overflow-of-Unsigned"><span class="nav-number">8.1.</span> <span class="nav-text">Overflow of Unsigned</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overflow-of-Signed"><span class="nav-number">8.2.</span> <span class="nav-text">Overflow of Signed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overflow-in-Bias-Form"><span class="nav-number">8.3.</span> <span class="nav-text">Overflow in Bias Form</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overflow-in-Two%E2%80%99s-Complement"><span class="nav-number">8.4.</span> <span class="nav-text">Overflow in Two’s Complement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-for-Integer-Overflow"><span class="nav-number">8.5.</span> <span class="nav-text">Check for Integer Overflow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-1"><span class="nav-number">8.5.1.</span> <span class="nav-text">Method 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-2"><span class="nav-number">8.5.2.</span> <span class="nav-text">Method 2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unsigned-In-C"><span class="nav-number">9.</span> <span class="nav-text">Unsigned In C</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complement-the-bits"><span class="nav-number">10.</span> <span class="nav-text">Complement the bits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary%E2%80%99s-Sign"><span class="nav-number">10.1.</span> <span class="nav-text">Binary’s Sign</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sign-and-Magnitude"><span class="nav-number">11.</span> <span class="nav-text">Sign and Magnitude</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One%E2%80%99s-Complement-%E5%8F%8D%E7%A0%81"><span class="nav-number">12.</span> <span class="nav-text">One’s Complement 反码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#To-Represent-Sign"><span class="nav-number">12.1.</span> <span class="nav-text">To Represent Sign</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conversion"><span class="nav-number">12.2.</span> <span class="nav-text">Conversion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shortcomings-of-One%E2%80%99s-Complement-Sign-amp-Magnitude"><span class="nav-number">13.</span> <span class="nav-text">Shortcomings of One’s Complement (Sign &amp; Magnitude)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Odometer"><span class="nav-number">13.1.</span> <span class="nav-text">Binary Odometer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Two%E2%80%99s-Complement-%E8%A1%A5%E7%A0%81"><span class="nav-number">14.</span> <span class="nav-text">Two’s Complement 补码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Property"><span class="nav-number">14.1.</span> <span class="nav-text">Property</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Advantages"><span class="nav-number">14.2.</span> <span class="nav-text">Advantages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Overflow-1"><span class="nav-number">14.3.</span> <span class="nav-text">Overflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intuitive-Understanding"><span class="nav-number">14.4.</span> <span class="nav-text">Intuitive Understanding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Converting-Two%E2%80%99s-Complement-to-Decimal"><span class="nav-number">14.5.</span> <span class="nav-text">Converting Two’s Complement to Decimal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Range"><span class="nav-number">14.6.</span> <span class="nav-text">Range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Addition-1"><span class="nav-number">14.7.</span> <span class="nav-text">Addition</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Biased-Encoding"><span class="nav-number">15.</span> <span class="nav-text">Biased Encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">16.</span> <span class="nav-text">数据类型的大小</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sizeof-%E5%92%8C-strlen-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">16.1.</span> <span class="nav-text">sizeof 和 strlen 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strlen%E7%94%A8%E6%B3%95"><span class="nav-number">16.2.</span> <span class="nav-text">strlen用法</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        
+      </section>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/shuoO-24" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en, cn">
+    <link itemprop="mainEntityOfPage" href="http://shuoo-24.github.io/2021/06/30/Number-Representation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ibb.co/d6rcNrG">
+      <meta itemprop="name" content="Shuo">
+      <meta itemprop="description" content="世界献我以歌">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shuo的空间站">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Number Representation
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-30 07:47:43 / Modified: 20:11:38" itemprop="dateCreated datePublished" datetime="2021-06-30T07:47:43-07:00">2021-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/UCB-61C/" itemprop="url" rel="index"><span itemprop="name">UCB-61C</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
 <p>Reading Materials and Tutoring Online:</p>
 <p><a target="_blank" rel="noopener" href="https://ryanstutorials.net/binary-tutorial/binary-negative-numbers.php#converting">Learn Binary Negative Numbers and 2’s Complement</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html">https://www.cs.cornell.edu/~tomf/notes/cps104/twoscomp.html</a></p>
@@ -178,7 +349,7 @@
 <p>  One way to encode decimal digits using binary signals is to encode each of the digits 0-9 by means of its <strong>4-bit</strong> binary representation:</p>
 <ul>
 <li><p>The use of digit values 0 through r – 1 in radix r is just a convention. We could use more than r digit values (for example, digit values –2 to 2 in radix 4) or use r digit values that do not start with 0 (for example, digit set {–1, 0, 1} in radix 3).</p>
-<p>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohxre4cj30b60ds0t5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled.png" style="zoom: 33%;" /></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohxre4cj30b60ds0t5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled.png" style="zoom: 33%;" /></p>
 </li>
 </ul>
 </li>
@@ -194,7 +365,7 @@
 <ul>
 <li>ASCII is an 8-bit code with 256 characters</li>
 <li><p>An 8-bit byte can accommodate up to 28, or $2^{56}$, characters.</p>
-<p>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohn5r0zj308j0avglv.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%201.png"></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohn5r0zj308j0avglv.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%201.png"></p>
 </li>
 <li><p>represents upper- and lower-case letters, numerals, punctuation marks, and other symbols in an 8-bit byte.</p>
 </li>
@@ -311,7 +482,7 @@
 <ul>
 <li><p><em>Why 7-bits?</em></p>
 <p>  The original ASCII code provides 128 difference characters has 7 digits. ASCII and 7-bit ASCII are synonymous. Since the 8-bit byte is the common storage element, ASCII leaves room for 128 additional characters, which are used to represent a host of foreign language and other symbols: </p>
-<p>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohhzvuuj30b60hwmyd.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%202.png"></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ohhzvuuj30b60hwmyd.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%202.png"></p>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://www.sciencebuddies.org/science-fair-projects/references/ascii-table">ASCII Table</a></p>
 <p>  <a target="_blank" rel="noopener" href="https://www.sciencebuddies.org/science-fair-projects/references/ascii-table">https://www.sciencebuddies.org/science-fair-projects/references/ascii-table</a></p>
@@ -346,7 +517,7 @@
 <li>The number of digits needed to represent $n$ in base $b$<br>is at least: $log_b(n+1)$</li>
 </ul>
 <hr>
-<h2 id="Base-Conversion"><a href="#Base-Conversion" class="headerlink" title="Base Conversion"></a>Base Conversion</h2><h3 id="Binary-Decimal-Hex"><a href="#Binary-Decimal-Hex" class="headerlink" title="Binary, Decimal, Hex"></a>Binary, Decimal, Hex</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ojmkk7oj30ty0cudrl.jpg" alt=""></p>
+<h2 id="Base-Conversion"><a href="#Base-Conversion" class="headerlink" title="Base Conversion"></a>Base Conversion</h2><h3 id="Binary-Decimal-Hex"><a href="#Binary-Decimal-Hex" class="headerlink" title="Binary, Decimal, Hex"></a>Binary, Decimal, Hex</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ojmkk7oj30ty0cudrl.jpg" alt=""></p>
 <ul>
 <li><p><strong>Relationship between decimal, hexadecimal and binary</strong></p>
 <p>  <a target="_blank" rel="noopener" href="https://www.notion.so/bb87049a052940d1b442f69c60cca337">relationship between decimal, hexadecimal and binary</a></p>
@@ -385,7 +556,7 @@
 <ul>
 <li>Writing as $0b1101$ or $1101_2$</li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0oh23mlqj31a405wt9e.jpg" alt="image-20210630024826735"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0oh23mlqj31a405wt9e.jpg" alt="image-20210630024826735"></p>
 <p>Imagine there are boxes with numbers indicated number of eggs every box can hold, $1$ means the box is full and $0$ means the box is empty. We can count the number of eggs to convert binary numbers into decimal numbers.</p>
 <p><a target="_blank" rel="noopener" href="https://www.notion.so/7937e47baa9f4a44a653a0c90e2452fa">Copy of The value of bits in hexadecimal numbers</a></p>
 <h3 id="Hexadecimal"><a href="#Hexadecimal" class="headerlink" title="Hexadecimal"></a>Hexadecimal</h3><ul>
@@ -548,7 +719,7 @@
 <li>1 - 1 = 0</li>
 <li>0 - 1 = 1 (put “-1” to next bit)</li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ogvns8nj306w05674q.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%204.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0ogvns8nj306w05674q.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%204.png"></p>
 <p>3rd bit carry -1, so 减数0被借去1，变成1，1 - 1 = 0, 3rd bit result is 0；0被减去之前要找前面的1借1，所以减数4th bit 1 - 1 = 0，结果为0</p>
 <h3 id="Multiplication"><a href="#Multiplication" class="headerlink" title="Multiplication"></a>Multiplication</h3><p>Same procedure as base 10 multiplication</p>
 <hr>
@@ -564,7 +735,7 @@
 <li>In most modern systems, the value doesn’t actually overflow into adjacent memory bits but is <strong>wrapped</strong> <strong>around</strong> or truncated using a modulo operation to fit in the variable.</li>
 <li>The most common result of an overflow is that the least significant representable digits of the result are stored; the result is said to wrap around the maximum (i.e. modulo a power of the radix, usually two in modern computers, but sometimes ten or another radix).</li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l996r7uj31400u0qv5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/IMG_7655.png" style="zoom:50%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l996r7uj31400u0qv5.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/IMG_7655.png" style="zoom:50%;" /></p>
 <h3 id="Overflow-of-Unsigned"><a href="#Overflow-of-Unsigned" class="headerlink" title="Overflow of Unsigned"></a>Overflow of Unsigned</h3><ul>
 <li>$1 + 255 = 0$</li>
 <li>Handling — modulo power of two</li>
@@ -590,7 +761,7 @@ Else return 0
 <h2 id="Unsigned-In-C"><a href="#Unsigned-In-C" class="headerlink" title="Unsigned In C"></a>Unsigned In C</h2><p>C: <code>unsigned int</code></p>
 <p>C18: <code>uintN_t</code> (N is the width of the numeral)</p>
 <p>(for N=32, $2^{N - 1} = 4,294,967,295$)</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8h84smj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%205.png" style="zoom: 33%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8h84smj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%205.png" style="zoom: 33%;" /></p>
 <blockquote>
 <p>The same bits can be interpreted in many diﬀerent ways with the exact same bits! It can be from an unsigned number to a signed number or even a program. It is all dependent on your interpretation.</p>
 </blockquote>
@@ -634,7 +805,7 @@ Else return 0
 <li><p>But for <strong>negative values</strong>, we first represent the value with <strong>positive sign</strong> and then take the <strong>one’s complement of it.</strong></p>
 <ul>
 <li><p><strong>Example:</strong></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8vp3atj30gh04d74i.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%206.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8vp3atj30gh04d74i.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%206.png"></p>
 </li>
 </ul>
 </li>
@@ -672,14 +843,14 @@ Else return 0
 </ul>
 <h2 id="Shortcomings-of-One’s-Complement-Sign-amp-Magnitude"><a href="#Shortcomings-of-One’s-Complement-Sign-amp-Magnitude" class="headerlink" title="Shortcomings of One’s Complement (Sign &amp; Magnitude)"></a>Shortcomings of One’s Complement (Sign &amp; Magnitude)</h2><h3 id="Binary-Odometer"><a href="#Binary-Odometer" class="headerlink" title="Binary Odometer"></a>Binary Odometer</h3><ul>
 <li><p>We can use five fingers (one hand) to represent binary numerals and count them continuously from 0 to 31:</p>
-<p>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8mnzuuj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%207.png" style="zoom: 33%;" /></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l8mnzuuj30go0fy0ud.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%207.png" style="zoom: 33%;" /></p>
 <p>  But with signed numbers, we need to reverse the order of counting for the left of the numerals.</p>
 <ul>
 <li><strong>Signed binary odometer:</strong> The leftmost bit is used for the sign, which leaves seven bits for the magnitude. The magnitude uses 7-bit unsigned binary, which can represent 010 (as 000 0000) up to 12710 (as 111 1111). The eighth bit makes these positive or negative, resulting in -12710, … -0, 0, … 12710.</li>
 </ul>
 </li>
 <li><p>Incremet binary odometer sometimes <strong>increase</strong> values, sometimes <strong>decrease</strong> values</p>
-<p>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7zuwukj31cy0ru7wh.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%208.png" style="zoom: 50%;" /></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7zuwukj31cy0ru7wh.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%208.png" style="zoom: 50%;" /></p>
 </li>
 <li><p>There are <strong>two zeros</strong>: — two zeros(00000 and 11111) overlap</p>
 <ul>
@@ -690,8 +861,8 @@ Else return 0
 <li>We can simply shift the left odometer by one — there exists a better solution; thus one’s complement was <strong>abandoned</strong> eventually. → two’s complement</li>
 </ul>
 <hr>
-<h2 id="Two’s-Complement-补码"><a href="#Two’s-Complement-补码" class="headerlink" title="Two’s Complement 补码"></a>Two’s Complement 补码</h2><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7ppmo6j30x00fwmz6.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%209.png"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://www.electronicshub.org/wp-content/uploads/2015/04/Table-2.jpg" alt="Signed Binary Numbers"></p>
+<h2 id="Two’s-Complement-补码"><a href="#Two’s-Complement-补码" class="headerlink" title="Two’s Complement 补码"></a>Two’s Complement 补码</h2><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l7ppmo6j30x00fwmz6.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%209.png"></p>
+<p><img src="https://www.electronicshub.org/wp-content/uploads/2015/04/Table-2.jpg" alt="Signed Binary Numbers"></p>
 <p>Table: <a target="_blank" rel="noopener" href="https://www.notion.so/d1d8a6053a2d4197bf42ffab2924d893">Table for two’s complement</a></p>
 <p>To get 2’s complement of binary number is <strong>1’s complement</strong> of given number <strong>plus 1</strong> to the least significant bit (LSB).</p>
 <ul>
@@ -728,14 +899,14 @@ Else return 0
 <li><p>$1$ zero</p>
 </li>
 <li><p><strong>Example:</strong> for 8 bits, $[0b01111111, 0b10000000]$, $[-128, 127]$</p>
-<p>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l4v5sdxj310w0l84e2.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2011.png" style="zoom:50%;" /></p>
+<p>  <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l4v5sdxj310w0l84e2.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2011.png" style="zoom:50%;" /></p>
 </li>
 <li><p>C99: <code>intN_t</code></p>
 </li>
 <li><p><strong>Example</strong>: flip -3 to 3 to -3 in a nibble</p>
 </li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l4rjwdfj30fq09caec.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2012.png" style="zoom: 33%;" /></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0l4rjwdfj30fq09caec.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2012.png" style="zoom: 33%;" /></p>
 <h3 id="Property"><a href="#Property" class="headerlink" title="Property"></a>Property</h3><p>Positive (negative) numbers can have infinitely many leading zeroes (ones). Twos complement numbers have some interesting properties, for example, the negation property. Let x’ denote the negation of binary number x (e.g., if x = 1010, then x’ = 0101). The following assertion holds:</p>
 <h3 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h3><p>Two’s complement numbers are excellent for representing equal number of positive and negative numbers for a fixed number of bits</p>
 <ul>
@@ -748,8 +919,8 @@ Else return 0
 <li>from $+2^{n−1}-1$ to $−2^{n-1}$ when adding</li>
 <li>from $−2^{n-1}$ to $+2^{n−1}-1$ when subtracting</li>
 </ul>
-<h3 id="Intuitive-Understanding"><a href="#Intuitive-Understanding" class="headerlink" title="Intuitive Understanding"></a>Intuitive Understanding</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2q351fj60y80bwmy802.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2013.png"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2u5eztj30xk0cu0u3.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2014.png" style="zoom:67%;" /></p>
+<h3 id="Intuitive-Understanding"><a href="#Intuitive-Understanding" class="headerlink" title="Intuitive Understanding"></a>Intuitive Understanding</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2q351fj60y80bwmy802.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2013.png"></p>
+<p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0g2u5eztj30xk0cu0u3.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2014.png" style="zoom:67%;" /></p>
 <h3 id="Converting-Two’s-Complement-to-Decimal"><a href="#Converting-Two’s-Complement-to-Decimal" class="headerlink" title="Converting Two’s Complement to Decimal"></a>Converting Two’s Complement to Decimal</h3><p><strong>Example:</strong> Converting 1111 to decimal:</p>
 <ol>
 <li>The number starts with 1, so it’s negative, so we find the <strong>complement</strong> of 1111, which is 0000.</li>
@@ -768,7 +939,7 @@ Else return 0
 <p><a target="_blank" rel="noopener" href="https://www.notion.so/65ca51ef24e242bb9c2b9f471c0e94bf">Copy of 2’s Complement Bit Range</a></p>
 </li>
 </ul>
-<h3 id="Addition-1"><a href="#Addition-1" class="headerlink" title="Addition"></a>Addition</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0okgaz6zj31k008cmyc.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2015.png"></p>
+<h3 id="Addition-1"><a href="#Addition-1" class="headerlink" title="Addition"></a>Addition</h3><p><img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs0okgaz6zj31k008cmyc.jpg" alt="Number%20Representation%205ca9be94e956409fb9bc1e5274f7b048/Untitled%2015.png"></p>
 <p><strong>Subtractions by 2’s Complement</strong></p>
 <p>The algorithm to subtract two binary number using 2’s complement is explained as following below −</p>
 <ul>
@@ -807,189 +978,132 @@ Else return 0
 <li><code>len = 0; while (*a++) &#123; len++; &#125;</code> or <code>len = 0; while (*a++) &#123; ++len; &#125;</code></li>
 </ul>
 
+    </div>
 
-<div class="article-footer fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
+    
+    
+    
 
-</article>
+    <footer class="post-footer">
+          
 
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>READ NEXT</span></section><section class="body fs14"><a id="next" href="/2021/06/30/%E7%9F%A5%E8%AF%86%E8%BF%9B%E6%AD%A5%E7%9A%84%E7%8A%80%E5%88%A9%E5%B7%A5%E5%85%B7%EF%BC%9A%E7%90%86%E8%AE%BA%E7%9A%84%E6%94%B6%E7%9B%8A%E5%92%8C%E6%88%90%E6%9C%AC/">知识进步的犀利工具：理论的收益和成本<span class="note">Older</span></a><div class="line"></div><div class="line"></div><a id="more" href="/archives">All Articles<span class="note">Archives</span></a></section></div>
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>Shuo
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="http://shuoo-24.github.io/2021/06/30/Number-Representation/" title="Number Representation">http://shuoo-24.github.io/2021/06/30/Number-Representation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
 
+          <div class="post-tags">
+              <a href="/tags/Computer-Architecture/" rel="tag"># Computer Architecture</a>
+              <a href="/tags/Computer-Arithmetic/" rel="tag"># Computer Arithmetic</a>
+          </div>
 
+        
 
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/30/%E7%9F%A5%E8%AF%86%E8%BF%9B%E6%AD%A5%E7%9A%84%E7%8A%80%E5%88%A9%E5%B7%A5%E5%85%B7%EF%BC%9A%E7%90%86%E8%AE%BA%E7%9A%84%E6%94%B6%E7%9B%8A%E5%92%8C%E6%88%90%E6%9C%AC/" rel="prev" title="知识进步的犀利工具：理论的收益和成本">
+                  <i class="fa fa-chevron-left"></i> 知识进步的犀利工具：理论的收益和成本
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
 
 
 
       
-<footer class="page-footer fs12"><hr><div class="text"><p>All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</p>
-<p>This site was deployed by <a href="http://shuoO-24.github.io/">@Shuo</a> using <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.2.1">Stellar</a>.</p>
-</div></footer>
 
-      <div class='float-panel mobile-only blur' style='display:none'>
-  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
-    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
-  </button>
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Shuo</span>
 </div>
 
     </div>
-  </div>
-  <div class='scripts'>
-    <script type="text/javascript">
-  stellar = {
-    // 懒加载 css https://github.com/filamentgroup/loadCSS
-    loadCSS: (href, before, media, attributes) => {
-      var doc = window.document;
-      var ss = doc.createElement("link");
-      var ref;
-      if (before) {
-        ref = before;
-      } else {
-        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
-        ref = refs[refs.length - 1];
-      }
-      var sheets = doc.styleSheets;
-      if (attributes) {
-        for (var attributeName in attributes) {
-          if (attributes.hasOwnProperty(attributeName)) {
-            ss.setAttribute(attributeName, attributes[attributeName]);
-          }
-        }
-      }
-      ss.rel = "stylesheet";
-      ss.href = href;
-      ss.media = "only x";
-      function ready(cb) {
-        if (doc.body) {
-          return cb();
-        }
-        setTimeout(function () {
-          ready(cb);
-        });
-      }
-      ready(function () {
-        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
-      });
-      var onloadcssdefined = function (cb) {
-        var resolvedHref = ss.href;
-        var i = sheets.length;
-        while (i--) {
-          if (sheets[i].href === resolvedHref) {
-            return cb();
-          }
-        }
-        setTimeout(function () {
-          onloadcssdefined(cb);
-        });
-      };
-      function loadCB() {
-        if (ss.addEventListener) {
-          ss.removeEventListener("load", loadCB);
-        }
-        ss.media = media || "all";
-      }
-      if (ss.addEventListener) {
-        ss.addEventListener("load", loadCB);
-      }
-      ss.onloadcssdefined = onloadcssdefined;
-      onloadcssdefined(loadCB);
-      return ss;
-    },
-
-    // 从 butterfly 和 volantis 获得灵感
-    loadScript: (src, opt) => new Promise((resolve, reject) => {
-      var script = document.createElement('script');
-      script.src = src;
-      if (opt) {
-        for (let key of Object.keys(opt)) {
-          script[key] = opt[key]
-        }
-      } else {
-        // 默认异步，如果需要同步，第二个参数传入 {} 即可
-        script.async = true
-      }
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    }),
-
-    // https://github.com/jerryc127/hexo-theme-butterfly
-    jQuery: (fn) => {
-      if (typeof jQuery === 'undefined') {
-        stellar.loadScript(stellar.plugins.jQuery).then(fn)
-      } else {
-        fn()
-      }
-    }
-  };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.2.1';
-  stellar.config = {
-    date_suffix: {
-      just: 'Just',
-      min: 'minutes ago',
-      hour: 'hours ago',
-      day: 'days ago',
-      month: 'months ago',
-    },
-  };
-
-  // required plugins (only load if needs)
-  stellar.plugins = {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-  };
-
-  // optional plugins
-  if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
-  }
-  if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-</script>
-
-<!-- required -->
+  </footer>
 
   
-<script src="/js/main.js" async></script>
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
 
 
 
-<!-- optional -->
 
 
 
-<!-- inject -->
 
 
-  </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
