@@ -17,20 +17,61 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
-  <title>Hello World - Shuo的空间站</title>
+  <title>RISC-V Instruction Overview - Shuo的空间站</title>
 
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="References:  【参考 1】: The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA, Document Version 20191213 【参考 2】: Using as: https:&#x2F;&#x2F;sourceware.org&#x2F;binutils&#x2F;docs&#x2F;as&#x2F; 【参考 3】: How to Use Inline Asse">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
+<meta property="og:title" content="RISC-V Instruction Overview">
 <meta property="og:url" content="http://shuoo-24.github.io/2021/06/30/hello-world/index.html">
 <meta property="og:site_name" content="Shuo的空间站">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="References:  【参考 1】: The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA, Document Version 20191213 【参考 2】: Using as: https:&#x2F;&#x2F;sourceware.org&#x2F;binutils&#x2F;docs&#x2F;as&#x2F; 【参考 3】: How to Use Inline Asse">
 <meta property="og:locale">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5he6eo1mj30xc0i8tku.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5fcais71j30wq0h4gys.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNly1gs5fnyma1ij310o0kajx2.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qudka3vj30jy0huq6b.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qulweclj30ji068jsm.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gduzha0j31220l6djh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gej2nfej310e0hajut.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNly1gs5gg1g2o8j60zi0fsqdf02.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gr6txumj31040joqcz.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h1c25qbj30xa06mjs7.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h34mr9lj30wq03emxl.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h5fkiuwj30wg09iwh4.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jf9er3uj31000gkgrh.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7j9rfyv1j30zk07qdgz.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k2cigqrj319e06i0ya.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jdpwn7ij30rs0a4dhg.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jidrvq4j30yo06u764.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jtma6ngj31380ay41w.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jb34hw9j310i0pm10o.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7ka4caqhj30t806g3z6.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kar8s5kj30s80300tr.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNly1gs7kifvy3nj30qy03it96.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kiwsgy9j30rq066dgi.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kd2qphzj30r20ekgon.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kdbv5y0j30r209w0tr.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lfqfncbj30yi04wdge.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lyaw09sj30x6058gm7.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r27qrlfj30r209imyo.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r0a6qpkj30is0rojxv.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k122fq5j30nq03sab2.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNly1gs5f2f5ei6j314c0io7dz.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5hhxrn4sj30uw0cwn3r.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs6ai5jp36j30xs0dmdjl.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs9xhfvc1oj31020c0ady.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7e4qwbp0j30zm0ckgry.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs6f456bcij310a0dc0yo.jpg">
+<meta property="og:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs7egavjmsj30wq0g4qbr.jpg">
 <meta property="article:published_time" content="2021-06-30T10:23:04.672Z">
-<meta property="article:modified_time" content="2021-06-30T10:23:04.672Z">
+<meta property="article:modified_time" content="2021-07-17T20:41:23.750Z">
 <meta property="article:author" content="Shuo">
+<meta property="article:tag" content="Computer Architecture">
+<meta property="article:tag" content="RISC-V">
+<meta property="article:tag" content="ISA">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/008i3skNgy1gs5he6eo1mj30xc0i8tku.jpg">
   
   
 
@@ -67,7 +108,7 @@
     
       
       
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">TOC</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol></div></div></div>
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">TOC</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="toc-text">语法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E6%93%8D%E4%BD%9C%E5%AF%B9%E8%B1%A1"><span class="toc-text">汇编指令操作对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98"><span class="toc-text">内存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="toc-text">指令编码格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-R-type-Register"><span class="toc-text">1. R-type:(Register)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#All-Instructions"><span class="toc-text">All Instructions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-I-type-Immediate"><span class="toc-text">2. I-type: (Immediate)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#All-instructions"><span class="toc-text">All instructions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Load-Instructions-are-also-I-type"><span class="toc-text">Load Instructions are also I-type</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-S-type-Store"><span class="toc-text">3. S-type: (Store)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#All-instructions-1"><span class="toc-text">All instructions</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-B-type-Branch"><span class="toc-text">4. B-type: (Branch)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Branching-Instruction-Usage"><span class="toc-text">Branching Instruction Usage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PC-Relative-Addressing"><span class="toc-text">PC-Relative Addressing</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Branch-Calculation"><span class="toc-text">Branch Calculation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Actural-RV32-Branch-Calculation"><span class="toc-text">Actural RV32 Branch Calculation</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Determine-Offset"><span class="toc-text">Determine Offset</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#All-instructions-2"><span class="toc-text">All instructions</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Translation"><span class="toc-text">Translation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-U-type-Upper"><span class="toc-text">5. U-type: (Upper)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Long-Immediate"><span class="toc-text">Long Immediate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LUI-to-Create-Long-Immediate"><span class="toc-text">LUI to Create Long Immediate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AUIPC"><span class="toc-text">AUIPC</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-J-type-Jump"><span class="toc-text">6. J-type: (Jump)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Uses-of-JAL"><span class="toc-text">Uses of JAL</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JALR-Instruction-I-Format"><span class="toc-text">JALR Instruction (I-Format)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Uses-of-JALR"><span class="toc-text">Uses of JALR</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Translation-Between-hexdecimal-and-instructions"><span class="toc-text">Translation Between hexdecimal and instructions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PC-Addressing"><span class="toc-text">PC-Addressing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Questions-on-PC-addressing"><span class="toc-text">Questions on PC-addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RISC-V-%E6%8C%87%E4%BB%A4%E5%AF%BB%E5%9D%80%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="toc-text">RISC-V 指令寻址模式总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Arithmetic-Instruction"><span class="toc-text">算术运算指令 Arithmetic Instruction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#addi"><span class="toc-text">addi</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LUI-Load-Upper-Immediate"><span class="toc-text">LUI (Load Upper Immediate)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AUIPC-add-upper-immediate-to-pc"><span class="toc-text">AUIPC (add upper immediate to pc)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LA%EF%BC%88Load-Address%EF%BC%89"><span class="toc-text">LA（Load Address）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MUL"><span class="toc-text">MUL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%AE%97%E6%9C%AF%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%85%B6%E4%BB%96%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">基于算术运算指令实现的其他伪指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PC-Relative-amp-PC-Absolute"><span class="toc-text">PC-Relative &amp; PC-Absolute</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97%E6%8C%87%E4%BB%A4-Shifting-Instructions"><span class="toc-text">移位运算指令 (Shifting Instructions)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E7%A7%BB%E4%BD%8D"><span class="toc-text">逻辑移位</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SLLI"><span class="toc-text">SLLI</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E7%A7%BB%E4%BD%8D"><span class="toc-text">算术移位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB%E5%86%99%E6%8C%87%E4%BB%A4"><span class="toc-text">内存读写指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%AF%BB-Load"><span class="toc-text">内存读 (Load)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%86%99-store"><span class="toc-text">内存写 (store)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E6%9D%A1%E4%BB%B6%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4%EF%BC%88Unconditional-Jump-Instructions%EF%BC%89"><span class="toc-text">无条件跳转指令（Unconditional Jump Instructions）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="toc-text">分支跳转指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4%EF%BC%88Conditional-Branch-Instructions%EF%BC%89"><span class="toc-text">条件分支指令（Conditional Branch Instructions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RISC-V-Features-n-times-16-bit-Instructions"><span class="toc-text">RISC-V Features, $n\times 16$-bit Instructions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RISC-V-Immediates"><span class="toc-text">RISC-V Immediates</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#No-Subtract-Immediate"><span class="toc-text">No Subtract Immediate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Register-Zero"><span class="toc-text">Register Zero</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Memory-Addresses-are-in-Bytes"><span class="toc-text">Memory Addresses are in Bytes</span></a></li></ol></div></div></div>
 
     
   
@@ -89,6 +130,9 @@
       <span class="sep"></span>
       <a class='cap breadcrumb' href='/'>Blog</a>
       
+        <span class="sep"></span>
+        <a class="cap breadcrumb-link" href="/categories/UCB-61C/">UCB-61C</a>
+      
     </div>
     <div id='post-meta'>
       Posted on&nbsp;<time datetime='2021-06-30T10:23:04.672Z'>2021-06-30</time>
@@ -98,16 +142,931 @@
 
 
 <article class='content md post'>
-<h1 class="article-title"><span>Hello World</span></h1>
-<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h1 class="article-title"><span>RISC-V Instruction Overview</span></h1>
+<blockquote>
+<p><em>References:</em></p>
+<ol>
+<li><em>【参考 1】: The RISC-V Instruction Set Manual, Volume I: Unprivileged ISA, Document Version 20191213</em></li>
+<li><em>【参考 2】: Using as: <a target="_blank" rel="noopener" href="https://sourceware.org/binutils/docs/as/">https://sourceware.org/binutils/docs/as/</a></em></li>
+<li><em>【参考 3】: How to Use Inline Assembly Language in C Code: <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/gcc/Using-">https://gcc.gnu.org/onlinedocs/gcc/Using-</a> Assembly-Language-with-C.html</em></li>
+</ol>
+</blockquote>
+<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5he6eo1mj30xc0i8tku.jpg" alt="image-20210704113134394"></em></p>
+<h2 id="语法介绍"><a href="#语法介绍" class="headerlink" title="语法介绍"></a>语法介绍</h2><ul>
+<li><p>An instruction consists of </p>
+<ul>
+<li><u>==opcode==</u>: unique code to specify the desired operation</li>
+<li>==<u>operands</u>==: zero or more additionalinformation needed for the operation</li>
+</ul>
+</li>
+<li><p>The operation designates the type and size of the operands</p>
+<ul>
+<li><p>Typical type and size: </p>
+<ul>
+<li>Character (8 bits), </li>
+<li>half-word (eg:16bits), </li>
+<li>word (eg:32bits) </li>
+<li>single-precision floating point (eg:1word), </li>
+<li>double-precision floating point (eg:2 words).</li>
+</ul>
+</li>
+<li><p>Expectations from any new 32-bit architecture:</p>
+<p>Support for8-, 16-and 32-bit integer and 32-bitand 64-bit floating point operations. A 64-bit architecture would need to support 64-bit integers as well.</p>
+</li>
+</ul>
+</li>
+<li><p>一个完整的 RISC-V 汇编程序有多条 语句 (statement) 组成。</p>
+</li>
+<li><p>一条典型的 RISC-V 汇编 语句 由 3 部分组成:</p>
+<p><code>[label:] [operation][comment]</code></p>
+<ul>
+<li><p><code>label</code> GNU汇编中，任何以冒号结尾的标识符都被 认为是一个标号。</p>
+</li>
+<li><p><code>operation</code> 可以有以下多种类型:</p>
+<ul>
+<li>==instruction==(指令): 直接对应二进制机器指令的字符串</li>
+<li>==pseudo-instruction==(伪指令): 为了提高编写代码的效率，可以用一条伪指令指示汇编器产生多条实际的指令(instructions)。</li>
+<li>==directive==(指示/伪操作): 通过类似指令的形式(以“.”开头)，通知汇编器如何控制代码的产生等，不对应具体的指令。 </li>
+<li>==macro==: 采用 .macro/.endm 自定义的宏</li>
+</ul>
+</li>
+<li><p><code>comment</code>(注释): 注释方式，“#” 开始到当前行结束。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="汇编指令操作对象"><a href="#汇编指令操作对象" class="headerlink" title="汇编指令操作对象"></a>汇编指令操作对象</h2><h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><ul>
+<li><p><em>32个通用寄存器，x0 ~ x31(注意: 仅涉及 RV32I 的通用寄存器组);</em></p>
+</li>
+<li><p><em>在 RISC-V 中，Hart 在执行算术逻辑运算时所操作的 数据必须直接来自寄存器。</em></p>
+</li>
+</ul>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a><em>内存</em></h3><ul>
+<li><em>Hart 可以执行在寄存器和内存之间的数据读写操作;</em></li>
+<li><em>读写操作使用字节(Byte)为基本单位进行寻址; • RV32 可以访问最多 $2^32$ 个字节的内存空间。</em></li>
+</ul>
+<hr>
+<h2 id="指令编码格式"><a href="#指令编码格式" class="headerlink" title="指令编码格式"></a>指令编码格式</h2><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5fcais71j30wq0h4gys.jpg" alt="image-20210704102033367"></em></p>
+<ul>
+<li><p><em>`</em>func7`指有7个bytes**</p>
+<ul>
+<li><code>func3</code> 和 <code>func7</code> 总是 $000$ 和 $0000000$</li>
+</ul>
+</li>
+<li><p>One <u>word</u> is 32 bits, so divide instruction word into “==fields==”</p>
+<ul>
+<li>Each field tells processor something about instruction</li>
+</ul>
+</li>
+<li><p>We could define different fields for each instruction, but RISC-V seeks simplicity, so define six basic types of instruction formats:</p>
+<ol>
+<li><p><em>==R-format for register-register arithmetic operations==</em></p>
+</li>
+<li><p><em>==I-format for register-immediate arithmetic operations and loads==</em></p>
+</li>
+<li><p><em>==S-format for stores==</em></p>
+</li>
+<li><p><em>==B-format for branches (minor variant of S-format)==</em></p>
+</li>
+<li><p><em>==U-format for 20-bit upper immediate instructions==</em></p>
+</li>
+<li><p><em>==J-format for jumps (minor variant of U-format)==</em></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="1-R-type-Register"><a href="#1-R-type-Register" class="headerlink" title="1. R-type:(Register)"></a>1. R-type:(Register)</h3><ul>
+<li>每条指令中有<strong>三个 fields</strong>，用于指定 <strong>3 个寄存器</strong>参数 — 数量少，操作快</li>
+<li><p><code>opcode</code>: partially specifies what instruction it is</p>
+<ul>
+<li>This field is equal to $0110011_{\text{two}}$ for all R-format register-register arithmetic instructioins</li>
+</ul>
+</li>
+<li><p><strong>fields</strong>:</p>
+<ul>
+<li><code>rs1</code>: source register field #1</li>
+<li><code>rs2</code>: source register field #2</li>
+<li><code>rd</code>: <u>destination register</u> which will receive <strong>result</strong> of the computation</li>
+<li><strong>Each register holds a 5-bit unsigned integer(0-31) to corresponding to a register number (x0-x31)</strong></li>
+</ul>
+</li>
+<li><p>Six fields: </p>
+<p>7(<code>func7</code>) + 5(<code>rs2</code>) + 5(<code>rs1</code>) + 3(<code>func3</code>) + 5(<code>rd</code>) + 7(<code>opcode</code>) = 32</p>
+<ul>
+<li>Why <code>rs1</code>, <code>rs2</code>, and <code>rd</code> have 5 bits?<ul>
+<li>To store exactly 32 values from 0 to 21 ($2^5=32$).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs5fnyma1ij310o0kajx2.jpg" alt="image-20210704103146634" style="zoom:47%;" /></em></p>
+</li>
+<li><p>We can <strong>change value of <code>func3</code> and <code>func7</code></strong> to perform different instructions, and in total we can perform $(2^3\cdot2^7)=2^{10}=1024$ R-format instructions.</p>
+<ul>
+<li><code>func3</code> and <code>func7</code>describe what operation to perform</li>
+</ul>
+</li>
+</ul>
+<h5 id="All-Instructions"><a href="#All-Instructions" class="headerlink" title="All Instructions"></a>All Instructions</h5><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qudka3vj30jy0huq6b.jpg" alt="image-20210706102937190"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7qulweclj30ji068jsm.jpg" alt="image-20210706102953167"></p>
+<h3 id="2-I-type-Immediate"><a href="#2-I-type-Immediate" class="headerlink" title="2. I-type: (Immediate)"></a>2. I-type: (Immediate)</h3><ul>
+<li><em>每条指令除了带有<strong>两个寄存器</strong>参数外，还带有一个<strong>立即数</strong>参数（用来表示整数）</em></li>
+<li>Compare: <strong>add rd,rs1,rs2</strong> with <strong>addi rd, rs1, imm</strong><ul>
+<li>5-bit field only represents numbers up to the value 31:</li>
+<li>immediates may be much larger than this</li>
+</ul>
+</li>
+<li>Ideally, RISC-V would have only one instruction format (for simplicity): unfortunately, we need to compromise</li>
+<li>Define new instruction format that is mostly consistent with R-format</li>
+<li>Notice if instruction has immediate, then uses <strong>at most 2 registers</strong> (one source, one destination)<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gduzha0j31220l6djh.jpg" alt="image-20210704105640491" style="zoom: 33%;" /></li>
+<li><code>immediate</code>: <ul>
+<li><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gej2nfej310e0hajut.jpg" alt="image-20210704105718907" style="zoom: 33%;" />*</li>
+</ul>
+</li>
+<li>When the I-type format is used for load instructions, the <strong>immediate represents a byte offset</strong>, so the load doubleword instruction can refer to any doubleword within a region of $±\;2^{11}$ or 2048 bytes ($±\;2^8$ or 256 doublewords) of the base address in the base register <code>rd</code></li>
+</ul>
+<h5 id="All-instructions"><a href="#All-instructions" class="headerlink" title="All instructions"></a>All instructions</h5><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs5gg1g2o8j60zi0fsqdf02.jpg" alt="image-20210704105845398"></em></p>
+<ul>
+<li><em><code>srai</code>:  <u>shift right arithmetic (srai</u>). This variant is similar to srli, except rather than filling the vacated bits on the left with zeros, it <em>*fills them with copies of the old sign bit.</em></em> </li>
+</ul>
+<h5 id="Load-Instructions-are-also-I-type"><a href="#Load-Instructions-are-also-I-type" class="headerlink" title="Load Instructions are also I-type"></a>Load Instructions are also I-type</h5><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5gr6txumj31040joqcz.jpg" alt="image-20210704110929274"></em></p>
+<ul>
+<li><code>opcode</code>: <strong>0000011</strong></li>
+</ul>
+<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h1c25qbj30xa06mjs7.jpg" alt="image-20210704111914066" style="zoom:50%;" /></em></p>
+<ul>
+<li>The 12-bit signed immediate is added to the base address in register <code>rsl</code> to form the memory address<ul>
+<li>This is very similar to the add-immediate operation but used to create address, not to create final result</li>
+</ul>
+</li>
+<li>Value loaded from memory is stored in <code>rd</code></li>
+</ul>
+<h3 id="3-S-type-Store"><a href="#3-S-type-Store" class="headerlink" title="3. S-type: (Store)"></a>3. S-type: (Store)</h3><ul>
+<li>每条指令除了带有<strong>两个寄存器</strong>参数外（无<code>sd</code>），还带有一个<strong>立即数</strong>参数(宽度为 12 bits，但 fields 的组织方式不同于 I-type，分为两个field来存储一个immediate)</li>
+<li><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h34mr9lj30wq03emxl.jpg" alt="image-20210704112057665"></em></p>
+</li>
+<li><p>Store needs to read two registers</p>
+<ul>
+<li><code>rs1</code> for base memory address</li>
+<li><code>rs2</code> for data to be stored</li>
+<li><code>immediate</code> <code>offset</code></li>
+</ul>
+</li>
+<li>Can’t have both <code>rs2</code> and <code>immediate</code> in same place as other instructions! </li>
+<li><strong>Note</strong>: stores don’t write a value to the register file, no <code>rd</code>!</li>
+<li>RISC-V design decision is move low 5 bits of <code>immediate</code> to where <code>rd</code> field was in other instructions – keep <code>rs1</code>/<code>rs2</code> fields in same place </li>
+<li>register names more critical than immediate bits in hardware design</li>
+<li><strong>Example</strong>: <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5h5fkiuwj30wg09iwh4.jpg" alt="image-20210704112310134" style="zoom:33%;" /></li>
+</ul>
+<h5 id="All-instructions-1"><a href="#All-instructions-1" class="headerlink" title="All instructions"></a>All instructions</h5><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jf9er3uj31000gkgrh.jpg" alt="image-20210706061256759"></p>
+<h3 id="4-B-type-Branch"><a href="#4-B-type-Branch" class="headerlink" title="4. B-type: (Branch)"></a>4. B-type: (Branch)</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7j9rfyv1j30zk07qdgz.jpg" alt="image-20210706060738252"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k2cigqrj319e06i0ya.jpg" alt="image-20210706063508120"></p>
+<ul>
+<li><p>每条指令除了带有<strong>两个寄存器</strong>参数外（无<code>sd</code>），还带有一个<strong>立即数</strong>参数(宽度 为 12 bits，但取值为 2 的倍数)。</p>
+</li>
+<li><p>与分支跳转有关</p>
+</li>
+<li><p>B-format is mostly same as S-Format, with two register sources (<strong>rs1</strong>/<strong>rs2</strong>) and a 12-bit immediate <strong>imm[12:1]</strong></p>
+<ul>
+<li><p>But now <code>immediate</code> represents values -4096 to +4094 in 2-byte increments</p>
+</li>
+<li><p>The 12 <code>immediate</code> bits encode even 13-bit signed byte offsets (<strong>lowest</strong> <strong>bit of offset is always zero</strong>, so no need to store it)</p>
+</li>
+<li><code>Immediate</code> is translated as the <strong>offset</strong> of the <code>label</code> passed in from the PC, i.e. <code>label−PC=imm</code>. It is then broken down bitwise and encoded into the bitstring in the format given. All other fields remain the same as previous instruction formats.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Branching-Instruction-Usage"><a href="#Branching-Instruction-Usage" class="headerlink" title="Branching Instruction Usage"></a>Branching Instruction Usage</h4><ul>
+<li>Typically used for <strong>loops</strong><ul>
+<li>Loops are generally <strong>small</strong> (&lt; 50 instructions)</li>
+<li><strong>Unconditional</strong> jumping and <strong>function</strong> call are <strong>J-format</strong> and handled with jump instructions</li>
+</ul>
+</li>
+<li><strong>Recall</strong>: instructions are stored in a localized area of memory (<strong>Text/Code</strong>)<ul>
+<li>Largest branching <strong>distance</strong> is <strong>limited by size of code</strong></li>
+<li>Address of current instruction is stored in <u>program counter(PC)</u></li>
+</ul>
+</li>
+</ul>
+<h4 id="PC-Relative-Addressing"><a href="#PC-Relative-Addressing" class="headerlink" title="PC-Relative Addressing"></a><u>PC-Relative Addressing</u></h4><ul>
+<li>Use immediate’s field as a <strong>two’s-complement offset</strong> to PC<ul>
+<li>Uses the <strong>PC and adds the immediate value of the instruction (multiplied by 2)</strong> to create an address (used by branch and jump instructions)</li>
+</ul>
+</li>
+<li>Branches generally change the PC by a small amount</li>
+<li>Can specify $\pm\;2^{11}$ ‘unit’ addresses from the PC<ul>
+<li>5 units from the destination register we don’t need</li>
+<li>7 units from <code>func7</code> field</li>
+<li>We will see in a bit that we can <strong>encode 12-bit offsets</strong> as <code>immediate</code></li>
+<li><em>In RISC V, many instructions have a 12-bit offset, and these are all signed extended to 32- or 64-bits (for RV32 or RV64, respectively). (Some instructions have a 20-bit offset, some of which work a bit differently.)</em></li>
+<li><strong>Explaination to the question</strong>: <em>What is range of 32-bit instructions that can be reached from the current PC using a branch instruction?</em><ul>
+<li>The immediate field of the branch instruction is <strong>12 bits</strong>. This field only references addresses that are <strong>divisible by 2</strong>, so the immediate is <strong>multiplied by 2</strong> before being added to the PC. Thus, the branch immediate can move the reference 2-byte instructions that are within $[−2^{11} , 2^{11} − 1]$ instructions of the current PC.</li>
+<li>The instructions we use, however, are 4 bytes so they reside at addresses that are divisible by 4 not 2. Therefore, we can only reference half as many 4-byte instructions as before, and the range of 4-byte instructions is $[−2^{10} , 2^{10} − 1]$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Why <strong>not use byte</strong>s as a unit of offset from PC?<ul>
+<li>Because instructions are 32-bit (4-bytes)</li>
+<li>We don’t branch into middle of instruction</li>
+</ul>
+</li>
+</ul>
+<h5 id="Branch-Calculation"><a href="#Branch-Calculation" class="headerlink" title="Branch Calculation"></a>Branch Calculation</h5><ul>
+<li><p>If we don’t take the branch:</p>
+<ul>
+<li><strong>PC = PC + 4</strong> (i.e., next instruction)</li>
+</ul>
+</li>
+<li><p>If we do take the branch: </p>
+<ul>
+<li><strong>PC = PC + immediate * 4</strong></li>
+</ul>
+</li>
+<li><p>Observations:</p>
+<ul>
+<li><strong>immediate</strong> is number of instructions to jump (remember, specifies words) either <strong>forward</strong> (+) or <strong>backwards</strong> (–)</li>
+</ul>
+</li>
+</ul>
+<h5 id="Actural-RV32-Branch-Calculation"><a href="#Actural-RV32-Branch-Calculation" class="headerlink" title="Actural RV32 Branch Calculation"></a>Actural RV32 Branch Calculation</h5><ul>
+<li><p>If we don’t take the branch:</p>
+<ul>
+<li><strong>PC = PC + 4</strong> (i.e., next instruction)</li>
+</ul>
+</li>
+<li><p>If we do take the branch: </p>
+<ul>
+<li><strong>PC = PC + immediate * 2</strong></li>
+</ul>
+</li>
+</ul>
+<h5 id="Determine-Offset"><a href="#Determine-Offset" class="headerlink" title="Determine Offset"></a>Determine Offset</h5><ul>
+<li><p><strong>Example</strong>: <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jdpwn7ij30rs0a4dhg.jpg" alt="image-20210706061127996" style="zoom: 33%;" /></p>
+<ul>
+<li><p>==Branch <strong>offset</strong> = <strong>4</strong>×<strong>32-bit instructions = 16 bytes</strong>==</p>
+<p>(Branch with offset of 0, branches to itself)</p>
+</li>
+<li><p><strong>Encoding</strong>:<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jidrvq4j30yo06u764.jpg" alt="image-20210706061556361"></p>
+<ul>
+<li>Opocode for <code>BRANCH</code> <code>beq</code>: 1100011</li>
+<li><code>rs1</code>: 19 in binary</li>
+<li><code>rs2</code>: 10 in binary</li>
+</ul>
+</li>
+<li><p><strong>Complete Encoding</strong>:</p>
+<ul>
+<li><code>beq x19, x10</code>, <strong>offset</strong> = <strong>16</strong> bytes</li>
+<li>13-bit <strong>immediate</strong>, <code>imm[12:0]</code>, with value <strong>16</strong><ul>
+<li>$0000000010000$, <code>imm[0]</code>is discarded, always zero</li>
+</ul>
+</li>
+<li><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jtma6ngj31380ay41w.jpg" alt="image-20210706062644563"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="All-instructions-2"><a href="#All-instructions-2" class="headerlink" title="All instructions"></a>All instructions</h5><ul>
+<li>Opcode is the same of all branches: $1100011$</li>
+</ul>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jb34hw9j310i0pm10o.jpg" alt="image-20210706060855809"></p>
+<h4 id="Translation"><a href="#Translation" class="headerlink" title="Translation"></a>Translation</h4><ul>
+<li>Retrieve <code>imm</code> value:<ul>
+<li>address of <code>bne</code> - address of label position</li>
+<li>sign extend to 13 bits</li>
+<li>rearrange bits in appropriate order</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-U-type-Upper"><a href="#5-U-type-Upper" class="headerlink" title="5. U-type: (Upper)"></a>5. U-type: (Upper)</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7ka4caqhj30t806g3z6.jpg" alt="image-20210706064235075"></p>
+<p>每条指令含有一个寄存器参数再加上一个立即数参数(宽度为 20 bits，用于表示一个<strong>立即数的高 20 位</strong>)</p>
+<h4 id="Long-Immediate"><a href="#Long-Immediate" class="headerlink" title="Long Immediate"></a>Long Immediate</h4><ul>
+<li><p>We want to load a memory address into a register so we can jump to it later—how can we do that in one instruction? </p>
+<ul>
+<li>We can’t! </li>
+<li>Because  instructions  in  our  system  are  words,  which  are  32-bits.   Ourregisters can hold that length, being 32-bits themselves. However, because our instructions them-selves are 32-bits, attempting to load something else that’s 32 bits, well, that just doesn’t work out logically. </li>
+<li>Thus, we need at the very least, <strong>2 instructions</strong> to do that.  All the instructions we have currently fill in the <strong>lower bits</strong> of a register; the ones (I-type) we’re interested in takes care of the base 12 bits.  To handle the <strong>upper 20 bits</strong>, we now use our <strong>upper immediate instructions</strong>. </li>
+</ul>
+</li>
+<li><p>Has <strong>20-bit immediate</strong> in upper <strong>20</strong> bits of 32-bit instruction word</p>
+</li>
+<li><p>One destination register, <code>rd</code></p>
+</li>
+<li><p>There are two such instructions: </p>
+<ul>
+<li><strong>lui </strong>– Load Upper Immediate</li>
+<li><strong>auipc</strong> – Add Upper Immediate to PC</li>
+</ul>
+</li>
+</ul>
+<h4 id="LUI-to-Create-Long-Immediate"><a href="#LUI-to-Create-Long-Immediate" class="headerlink" title="LUI to Create Long Immediate"></a>LUI to Create Long Immediate</h4><ul>
+<li><p>LUI writes the upper 20 bits of the destination with the immediate value, and clears the lower 12 bits.</p>
+</li>
+<li><p>Together with an <strong>addi</strong> to set low 12 bits, can create any 32-bit value in a register using two instructions (<strong>lui</strong>/<strong>addi</strong>).</p>
+</li>
+<li><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kar8s5kj30s80300tr.jpg" alt="image-20210706064313290" style="zoom:67%;" /></p>
+<ul>
+<li>LUI puts 0x87654 into the upper 20 bits(5 nibbles) and <code>addi</code> adds 0x321 to it. </li>
+</ul>
+</li>
+<li><p><strong>addi </strong>12-bit immediate is always <strong>sign-extended</strong>, if <strong>top bit is set</strong>, will subtract -1 from upper 20 bits: <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs7kifvy3nj30qy03it96.jpg" alt="image-20210706065036469"></p>
+</li>
+<li><strong>Pre-increment</strong> value placed in upper 20 bits, if sign bit will be set on immediate in lower 12 bits:<img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kiwsgy9j30rq066dgi.jpg" alt="image-20210706065102507" style="zoom:50%;" /></li>
+</ul>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kd2qphzj30r20ekgon.jpg" alt="image-20210706064526385" style="zoom:37%;" /></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7kdbv5y0j30r209w0tr.jpg" alt="image-20210706064541923" style="zoom:37%;" /></p>
+<ul>
+<li><p>Assembler pseudo-op handles all of this:</p>
+<p><code>li x10, 0xDEADBEEF # Creates two instructions</code></p>
+</li>
+</ul>
+<h4 id="AUIPC"><a href="#AUIPC" class="headerlink" title="AUIPC"></a>AUIPC</h4><ul>
+<li><p>Adds upper immediate value to PC and places result in destination register</p>
+</li>
+<li><p>Used for PC-relative addressing</p>
+</li>
+<li><p><code>Label: AUIPC x10, 0 # Puts address of Label in x10</code></p>
+</li>
+</ul>
+<h3 id="6-J-type-Jump"><a href="#6-J-type-Jump" class="headerlink" title="6. J-type: (Jump)"></a>6. J-type: (Jump)</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lfqfncbj30yi04wdge.jpg" alt="image-20210706072234463"></p>
+<p>每条指令含有<strong>一个寄存器</strong>参数再加上<strong>一个立即数</strong>参数(宽度为 20 bits)</p>
+<ul>
+<li><p><strong>jal</strong> saves PC+4 in register <strong>rd</strong> (the return address)</p>
+<ul>
+<li>Assembler “<strong>j</strong>” jump is pseudo-instruction, uses JAL but sets <strong>rd=x0</strong> to discard return address</li>
+</ul>
+</li>
+<li><p>Set PC = PC + offset (PC-relative jump)</p>
+</li>
+<li><p>Target somewhere within $±\;2^{19}$ locations, 2 bytes apart (Even address)</p>
+<ul>
+<li>$±\;2^{18}$ 32-bit instructions</li>
+</ul>
+</li>
+<li>Immediate encoding optimized similarly to branch instruction to reduce hardware cost</li>
+</ul>
+<h4 id="Uses-of-JAL"><a href="#Uses-of-JAL" class="headerlink" title="Uses of JAL"></a>Uses of JAL</h4><ul>
+<li>j pseudo-instruction:<ul>
+<li><code>j Label = jal x0, Label # Discard return</code></li>
+</ul>
+</li>
+<li>Call function within $2^{18}$ instructions of PC<ul>
+<li><code>jal ra, FuncName</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="JALR-Instruction-I-Format"><a href="#JALR-Instruction-I-Format" class="headerlink" title="JALR Instruction (I-Format)"></a>JALR Instruction (I-Format)</h4><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7lyaw09sj30x6058gm7.jpg" alt="image-20210706074026909"></p>
+<ul>
+<li><strong>jalr rd, rs, immediate</strong><ul>
+<li>Writes PC+4 to <code>rd</code> (<strong>return address</strong>)</li>
+<li>Sets PC = <strong>rs + immediate</strong>(sign-extended and set LSB to 0)</li>
+<li>Uses same immediates as arithmetic and loads<ul>
+<li><strong>no</strong> multiplication by 2 bytes</li>
+<li>In contrast to branches and <strong>jal</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="Uses-of-JALR"><a href="#Uses-of-JALR" class="headerlink" title="Uses of JALR"></a>Uses of JALR</h5><ul>
+<li><p><strong>ret and jr psuedo-instructions</strong></p>
+<ul>
+<li><code>ret = jr ra = jalr x0, ra, 0</code></li>
+<li>jump to address stored in <code>ra</code> — used in the end of the function called inside another function </li>
+</ul>
+</li>
+<li><p><strong>Call function at any 32-bit absolute address</strong></p>
+<ul>
+<li><p><code>lui x1, &lt;hi20bits&gt;</code></p>
+<p> <code>jalr ra, x1, &lt;lo12bits&gt;</code></p>
+</li>
+</ul>
+</li>
+<li><p><strong>Jump PC-relative with 32-bit offset</strong></p>
+<ul>
+<li><p><code>auipc x1, &lt;hi20bits&gt;</code></p>
+<p><code>jalr x0, x1, &lt;lo12bits&gt;</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r27qrlfj30r209imyo.jpg" alt="image-20210706103710470" style="zoom:50%;" /></p>
+<hr>
+<h3 id="Translation-Between-hexdecimal-and-instructions"><a href="#Translation-Between-hexdecimal-and-instructions" class="headerlink" title="Translation Between hexdecimal and instructions"></a>Translation Between hexdecimal and instructions</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7r0a6qpkj30is0rojxv.jpg" alt="image-20210706103520577"></p>
+<hr>
+<h2 id="PC-Addressing"><a href="#PC-Addressing" class="headerlink" title="PC-Addressing"></a>PC-Addressing</h2><h3 id="Questions-on-PC-addressing"><a href="#Questions-on-PC-addressing" class="headerlink" title="Questions on PC-addressing"></a>Questions on PC-addressing</h3><ul>
+<li><p><em>Does the value in branch immediate field change if we <strong>move</strong> the code?</em> </p>
+<ul>
+<li><p>If <strong>moving individual lines</strong> of code, then yes</p>
+</li>
+<li><p>If moving <strong>all</strong> of code, then no (<u>‘position-independent code’</u>)</p>
+</li>
+</ul>
+</li>
+<li><p><em>What do we do if destination is $&gt;2^{10}$ instructions away from branch?</em> 如何解决更远距离的跳转？</p>
+<ul>
+<li><p>Other instructions save us:</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7k122fq5j30nq03sab2.jpg" alt="image-20210706063353468" style="zoom:33%;" /></p>
+</li>
+<li><p>The jump will have a much longer reach than branches</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h3 id="RISC-V-指令寻址模式总结"><a href="#RISC-V-指令寻址模式总结" class="headerlink" title="RISC-V 指令寻址模式总结"></a>RISC-V 指令寻址模式总结</h3><ul>
+<li>寻址模式指的是指令中定位<strong>操作数(operand)</strong>或者<strong>地址</strong>的方式</li>
+</ul>
+<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNly1gs5f2f5ei6j314c0io7dz.jpg" alt="image-20210704101104930"></em></p>
+<hr>
+<h2 id="算术运算指令-Arithmetic-Instruction"><a href="#算术运算指令-Arithmetic-Instruction" class="headerlink" title="算术运算指令 Arithmetic Instruction"></a>算术运算指令 Arithmetic Instruction</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th><em>语法</em></th>
+<th><em>描述</em></th>
+<th><em>例子</em></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ADD</code></td>
+<td>ADD RD, RS1, RS2</td>
+<td>RS1 和 RS2 的值相加，结果保存到 RD</td>
+<td>add x5, x6, x7</td>
+<td></td>
+</tr>
+<tr>
+<td><code>SUB</code></td>
+<td>SUB RD, RS1, RS2</td>
+<td>RS1 的值减去 RS2 的值，结果保存到 RD</td>
+<td>sub x5, x6, x7</td>
+<td></td>
+</tr>
+<tr>
+<td><code>ADDI</code></td>
+<td>ADDI RD, RS1, IMM</td>
+<td>RS1 的值和 IMM 相加，结果保存到 RD</td>
+<td>addi x5, x6, 100</td>
+<td></td>
+</tr>
+<tr>
+<td><code>LUI</code></td>
+<td>LUI RD, IMM</td>
+<td>构造一个 32 位的数，高 20 位存放 IMM，低 12 位清 零。结果保存到 RD</td>
+<td>lui x5, 0x12345</td>
+<td></td>
+</tr>
+<tr>
+<td><code>AUIPC</code></td>
+<td>AUIPC RD, IMM</td>
+<td>构造一个 32 位的数，高 20 位存放 IMM，低 12 位清 零。结果和 PC 相加后保存到 RD</td>
+<td><code>auipc x5, 0x12345</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>伪指令</th>
+<th>语法</th>
+<th>等价指令</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LI</code></td>
+<td>LI RD, IMM</td>
+<td>LUI 和 ADDI 的组合</td>
+<td>将立即数 IMM 加载到 RD 中</td>
+<td>li x5, 0x12345678</td>
+</tr>
+<tr>
+<td><em><code>LA</code></em></td>
+<td><em><code>LA RD, LABEL</code></em></td>
+<td>AUIPC 和 ADDI的组合</td>
+<td>为 <code>RD</code> 加载一个地址值</td>
+<td>la x5 label</td>
+</tr>
+<tr>
+<td><code>NEG</code></td>
+<td>NEG RD, RS</td>
+<td>SUB RD, x0, RS</td>
+<td>对 RS 中的值取反并将结果 存放在 RD 中</td>
+<td>neg x5, x6</td>
+</tr>
+<tr>
+<td><code>MV</code></td>
+<td><code>MV RD, RS</code></td>
+<td><code>ADDI RD, RS, 0</code></td>
+<td>将 RS 中的值拷贝到 RD 中</td>
+<td>mv x5, x6</td>
+</tr>
+<tr>
+<td>NOP</td>
+<td>NOP</td>
+<td>ADDI x0, x0, 0</td>
+<td>什么也不做</td>
+<td>nop</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="addi"><a href="#addi" class="headerlink" title="addi"></a>addi</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>ADDI RD, RS1, IMM</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>例子</td>
+<td>add x5, x6, 1</td>
+<td>x5 = x6 + 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs5hhxrn4sj30uw0cwn3r.jpg" alt="image-20210704113511874" style="zoom:50%;" /></em></p>
+<h3 id="LUI-Load-Upper-Immediate"><a href="#LUI-Load-Upper-Immediate" class="headerlink" title="LUI (Load Upper Immediate)"></a>LUI (Load Upper Immediate)</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>LUI RD, IMM</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>例子</td>
+<td>lui x5, 0x12345</td>
+<td>x5 = 0x12345 &lt;&lt; 12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><code>LUI</code> 指令采用 U-type： <ul>
+<li><code>opcode</code> (7): <strong>0b0110111</strong> (LUI)</li>
+<li><code>rd</code> (5): “destination register” 用于存放结果 </li>
+<li><code>imm</code> (20): “immediate”, 立即数</li>
+</ul>
+</li>
+<li><code>LUI</code> 指令会<strong>构造一个 32 bits 的立即数</strong>，这个立即数的高 20 位对应指令中的 <code>imm</code>，低 12 位清零。 这个立即数作为结果存放在 <code>RD</code> 中。</li>
+<li>Can be the first sub-instruction used in <code>la</code></li>
+<li>Upper 20 bits set to instruction-type immediate</li>
+<li>Stands for “Load Upper Immediate”</li>
+<li>Lower 12 bits always set to 0</li>
+<li><em><code>lui</code> is an U-type instruction (upper immediate); it like all other instructions with a destination register <code>rd</code> will set all 32-bits of the register. However, it is unique in the fact that it’ll set the upper bits to something <strong>other</strong> than 0. This is because it takes the 20-bit immediate and puts it in the upper 20 bits (and the remaining lower 12 bits are set to 0). This is often u<strong>seful when you want to load a 32-bit value (without considering sign/0-extended bits)</strong> into register. It’s impossible to do with the RISC-V 32-bit architecture as if we need 32 bits for the immediate to load into a register, there is no other available bits to identify <code>rd</code> or instruction type. These two fields fill up the remaining 12 bits (7 bits for opcode, 5 bits for <code>rd</code>).</em></li>
+<li><em><code>lui</code> is also considered a <strong><u>0-relative, or absolute, addressing instruction</u></strong>. This means that the U-type immediate it uses is added to 0 instead of the PC (program counter) and thus will address things starting from the “start” of memory as opposed to being an offset to where the current instruction is in memory.</em></li>
+<li><em>One of the common ways you might see this instruction used is as the first instruction composing the pseudo-instruction <code>la</code> (load address) along with <code>addi</code> being the second instruction. This is because <code>la</code> takes in a label, and attempts to load the 32-bit address associated with that label; however because we know we <strong>can’t load 32 bits</strong> at a time, we have to break that up so <code>lui</code> takes the upper 20 bits of the address and puts it in <code>rd</code> and the <strong>subsequent <code>addi</code> instruction adds the lower 12 bits to make the 32-bit address</strong>. This is a common way to load other addresses and large immediates as well.</em></li>
+<li><strong>Example</strong>:<ul>
+<li>利用 LUI + ADDI 来为寄存器加载一个大数 0x12345678 <ul>
+<li><code>lui x1, 0x12345 # x1 = 0x12345000</code> </li>
+<li><code>addi x1, x1, 0x678 # x1 = 0x12345678</code></li>
+</ul>
+</li>
+<li>利用 LUI + ADDI 来为寄存器加载一个大数 0x12345FFF <ul>
+<li><code>lui x1, 0x12346 # x1 = 0x12346000</code></li>
+<li><code>addi x1, x1, -1 # x1 = 0x12345FFF</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="AUIPC-add-upper-immediate-to-pc"><a href="#AUIPC-add-upper-immediate-to-pc" class="headerlink" title="AUIPC (add upper immediate to pc)"></a>AUIPC (add upper immediate to pc)</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>AUIPC RD, IMM</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>例子</td>
+<td>auipc x5, 0x12345</td>
+<td>x5 = 0x12345 &lt;&lt; 12 + PC</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p><code>AUIPC</code> 指令采用 U-type</p>
+</li>
+<li><p>和 <code>LUI</code> 指令类似，<code>AUIPC</code> 指令也会构造一个 32 bits 的立即数，这个立即数的高 20 位对应指令中 的 <code>imm</code>，低 12 位清零。但和 <code>LUI</code> 不同的是，<code>AUIPC</code> 会先将这个立即数和 PC 值相加，将相加后的结果存放在 <code>RD</code> 中。</p>
+</li>
+<li><p><code>auipc</code> stands for “Add Upper Immediate to Program Counter”; the presence of “program counter” indicates that this is a <u><strong>PC-relative instruction</strong></u>, unlike <code>lui</code>. This means that the U-type immediate it uses is added to the <code>PC</code> at that instruction. However, the nuance behind how the immediate is added is that the immediate added to the PC is shifted to the upper 20 bits and the lower 12 bits are zeroed out again. This does not mean that the immediate itself is 32 bits and gets added to <code>PC</code> and <strong>then</strong> the lower 12 bits get zeroed out as the immediate, as with <code>lui</code>, cannot be a full 32 bits due to bit-restrictions.</p>
+</li>
+<li><p>There are two common ways you might see <code>auipc</code> used. </p>
+<ul>
+<li><p>The first is similarly to <code>lui</code>, it loads the label in the <code>la</code> pseudo-instruction; the difference between using <code>auipc</code> and <code>lui</code> that one address will be taken as a PC-relative address whilst the latter will be taken as an absolute address (you can also determine this at compile-time with various flags). <strong>NOTE: in 61C (and overall), <code>lui</code> is used when decomposing <code>la</code>; however it’s becoming more and more common to use <code>auipc</code> commonly.</strong></p>
+</li>
+<li><p>The second common usage is returning to a specific memory address, e.g. using it in conjunction with <code>jalr</code> in order to <strong>return from a function</strong>. The way in which this works is such that <code>auipc</code> will load a PC-relative address into a register, and then <code>jalr</code> can address to an <code>imm</code> number of bytes offset from that address in order to unconditionally jump to a memory location.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="LA（Load-Address）"><a href="#LA（Load-Address）" class="headerlink" title="LA（Load Address）"></a>LA（Load Address）</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>LA RD, LABEL</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>例子</td>
+<td>la x5, foo</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>LA是一个伪指令（pseudo-instruction）</li>
+<li>具体编程时给出需要加载的 <code>label</code>，编译器会根据实际情况利用 <code>auipc</code> 和其他指令自动生成正确的指令序列。</li>
+<li>常用于<strong>加载一个函数或者变量的地址</strong>。</li>
+</ul>
+<h3 id="MUL"><a href="#MUL" class="headerlink" title="MUL"></a>MUL</h3><ul>
+<li>积 = 被乘数 × 乘数<ul>
+<li>它比除法要更为复杂，是因为积的长度是乘数和被乘数长度的和。将两个 32 位数相乘得到的是 64 位的乘积。为了正确地得到一个有符号或无符号的 64 位积，RISC-V 中带有四个乘法指令。要得到整数 32 位乘积（64 位中的<strong>低 32 位</strong>）就用 <code>mul</code> 指令。要得到<strong>高 32 位</strong>，如果操作数都是有符号数，就用 <code>mulh</code> 指令；如果操作数都是无符号数，就用 mulhu 指令；如果一个有符号一个无符号，可以用 mulhsu 指令。在一条指令中完成把 64 位积写入两个 32位寄存器的操作会使硬件设计变得复杂，所以 RV32M 需要两条乘法指令才能得到一个完整的 64 位积。</li>
+</ul>
+</li>
+</ul>
+<h3 id="基于算术运算指令实现的其他伪指令"><a href="#基于算术运算指令实现的其他伪指令" class="headerlink" title="基于算术运算指令实现的其他伪指令"></a>基于算术运算指令实现的其他伪指令</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>伪指令</th>
+<th>语法</th>
+<th>等价指令</th>
+<th>指令描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NEG</code></td>
+<td><code>NEG RD, RS</code></td>
+<td><code>SUB RD, x0, RS</code></td>
+<td>对 RS 中的值取反并将结果存放在 RD 中</td>
+<td>neg x5, x6</td>
+</tr>
+<tr>
+<td><code>MV</code></td>
+<td><code>MV RD, RS</code></td>
+<td><code>ADDI RD, RS, 0</code></td>
+<td>将 <code>RS</code> 中的值拷贝到 <code>RD</code> 中</td>
+<td>mv x5, x6</td>
+</tr>
+<tr>
+<td><code>NOP</code></td>
+<td><code>NOP</code></td>
+<td><code>ADDI x0, x0, 0</code></td>
+<td>什么也不做</td>
+<td>nop</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h3 id="PC-Relative-amp-PC-Absolute"><a href="#PC-Relative-amp-PC-Absolute" class="headerlink" title="PC-Relative &amp; PC-Absolute"></a>PC-Relative &amp; PC-Absolute</h3><p>an instruction with <strong>lui</strong> followed by <strong>jalr</strong> instruction is considered <strong>PC-absolute</strong>, and an instruction with <strong>auipc</strong> followed by <strong>jalr</strong> instruction is considered <strong>PC-relative</strong>.<sup><a href="#fn_1" id="reffn_1">1</a></sup></p>
+<blockquote id="fn_1">
+<sup>1</sup>. <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/52574537/risc-v-pc-absolute-vs-pc-relative">https://stackoverflow.com/questions/52574537/risc-v-pc-absolute-vs-pc-relative</a><a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a>
+</blockquote>
+<hr>
+<h2 id="移位运算指令-Shifting-Instructions"><a href="#移位运算指令-Shifting-Instructions" class="headerlink" title="移位运算指令 (Shifting Instructions)"></a>移位运算指令 (Shifting Instructions)</h2><h3 id="逻辑移位"><a href="#逻辑移位" class="headerlink" title="逻辑移位"></a>逻辑移位</h3><ul>
+<li>左移 — 乘法</li>
+<li><code>SLL</code>, <code>SRL</code>, and <code>SRA</code> perform logical left, logical right, and arithmetic right shifts on the value in register rs1 by the shift amount held in the <strong>lower 5 bits of register <code>rs2</code></strong>.</li>
+</ul>
+<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs6ai5jp36j30xs0dmdjl.jpg" alt="image-20210705041842923"></em></p>
+<h4 id="SLLI"><a href="#SLLI" class="headerlink" title="SLLI"></a>SLLI</h4><ul>
+<li><p>Used to <strong>access elements in the array</strong></p>
+</li>
+<li><p>Left shifting a number $N$ bits produces the same result as multiplying the number by <script type="math/tex">2^N</script>. </p>
+<ul>
+<li><p>Since a multiply instruction is generally more expensive (slower) than a shift instruction, left shifting is used instead of a multiply instruction as an optimization when possible: if one of the operands is a constant power of two.</p>
+</li>
+<li><p><strong>Example</strong>:</p>
+<p><code>slli</code> is used to calculate the <em>offset</em> into the array <code>save</code>. Since <code>i</code> corresponds to <code>x22</code>, then:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">slli x10,x22,<span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>multiplies the value of <code>i</code> by <em>8</em> (i.e., $2^3$, a power of two) and writes this result to <code>x10</code>.</p>
+<p><code>x25</code> indicates the <strong>base address of the array</strong> <code>save</code> – the address of its first element – <code>save[0]</code>. Together with <code>x10</code>, which corresponds to the <em>offset</em>, is used to calculate the address of <code>save[i]</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add  x10,x10,x25</span><br></pre></td></tr></table></figure>
+<p>At this point, <code>x10</code> holds the address of <code>save[i]</code>. That element is eventually loaded into <code>x9</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lw   x9, <span class="number">0</span>(x10)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="算术移位"><a href="#算术移位" class="headerlink" title="算术移位"></a>算术移位</h3><p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs9xhfvc1oj31020c0ady.jpg" alt="image-20210708075032310" style="zoom:80%;" /></p>
+<hr>
+<h2 id="内存读写指令"><a href="#内存读写指令" class="headerlink" title="内存读写指令"></a>内存读写指令</h2><h3 id="内存读-Load"><a href="#内存读-Load" class="headerlink" title="内存读 (Load)"></a>内存读 (Load)</h3><ul>
+<li><code>sw rs2, imm(rs1)</code><ul>
+<li>把<code>rs2</code>读写到地址为<code>imm+rs1</code>的内存里</li>
+</ul>
+</li>
+<li><p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7e4qwbp0j30zm0ckgry.jpg" alt="image-20210706030944037"></em></p>
+</li>
+<li><p>用于 function call 开头 (prologue)</p>
+</li>
+<li><p>Example:</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># Prologue</span><br><span class="line">addi sp, sp, -<span class="number">36</span></span><br><span class="line">sw s2, <span class="number">0</span>(sp)            # num of elems</span><br><span class="line">sw s3, <span class="number">4</span>(sp) </span><br><span class="line">sw s4, <span class="number">8</span>(sp)</span><br><span class="line">sw s5, <span class="number">12</span>(sp)</span><br><span class="line">sw s6, <span class="number">16</span>(sp)</span><br><span class="line">sw s7, <span class="number">20</span>(sp)</span><br><span class="line">sw s8, <span class="number">24</span>(sp)</span><br><span class="line">sw s9, <span class="number">28</span>(sp)</span><br><span class="line">sw s10, <span class="number">32</span>(sp)</span><br><span class="line">addi s2, a2, <span class="number">0</span> </span><br><span class="line">addi s3, a0, <span class="number">0</span> </span><br><span class="line">addi s4, a1, <span class="number">0</span> </span><br><span class="line">addi s5, x0, <span class="number">0</span> </span><br><span class="line">addi s6, a3, <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="内存写-store"><a href="#内存写-store" class="headerlink" title="内存写 (store)"></a>内存写 (store)</h3><ul>
+<li>把数据往外放</li>
+<li>寄存器里有四个字节，外面有一个字节</li>
+</ul>
+<p><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs6f456bcij310a0dc0yo.jpg" alt="image-20210705065812410"></em></p>
+<hr>
+<h3 id="无条件跳转指令（Unconditional-Jump-Instructions）"><a href="#无条件跳转指令（Unconditional-Jump-Instructions）" class="headerlink" title="无条件跳转指令（Unconditional Jump Instructions）"></a>无条件跳转指令（Unconditional Jump Instructions）</h3><p>如果跳转后不需要返回，可以利用 x0 代替 JAL 和 JALR 中的 RD</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><em>伪指令</em></th>
+<th><em>语法</em></th>
+<th><em>等价指令</em></th>
+<th><em>例子</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>J</em></td>
+<td><em>J OFFSET</em></td>
+<td><em>JAL X0, OFFSET</em></td>
+<td><em>j leap</em></td>
+</tr>
+<tr>
+<td><em>JR</em></td>
+<td><em>JR RS</em></td>
+<td><em>JALR X0, 0(RS)</em></td>
+<td><em>jr x2</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="分支跳转指令"><a href="#分支跳转指令" class="headerlink" title="分支跳转指令"></a>分支跳转指令</h2><h3 id="条件分支指令（Conditional-Branch-Instructions）"><a href="#条件分支指令（Conditional-Branch-Instructions）" class="headerlink" title="条件分支指令（Conditional Branch Instructions）"></a>条件分支指令（Conditional Branch Instructions）</h3><ul>
+<li><em><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7egavjmsj30wq0g4qbr.jpg" alt="image-20210706032055663"></em></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>伪指令</th>
+<th>语法</th>
+<th>等价指令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BLE</td>
+<td>BLE RS, RT, OFFSET</td>
+<td>BGE RT, RS, OFFSET</td>
+<td>Branch if Less &amp; Equal，有符号方式比较，如果 RS &lt;= RT，跳 转到 OFFSET</td>
+</tr>
+<tr>
+<td>BLEU</td>
+<td>BLEU RS, RT, OFFSET</td>
+<td>BGEU RT, RS, OFFSET</td>
+<td>Branch if Less or Equal Unsigned，无符号方式比较，如果 RS &lt;= RT，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BGT</td>
+<td>BGT RS, RT, OFFSET</td>
+<td>BLT RT, RS, OFFSET</td>
+<td>Branch if Greater Than，有符号方式比较，如果 RS &gt; RT，跳 转到 OFFSET</td>
+</tr>
+<tr>
+<td>BGTU</td>
+<td>BGTU RS, RT, OFFSET</td>
+<td>BLTU RT, RS, OFFSET</td>
+<td>Branch if Greater Than Unsigned，无符号方式比较，如果 RS &gt; RT，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BEQZ</td>
+<td>BEQZ RS, OFFSET</td>
+<td>BEQ RS, x0, OFFSET</td>
+<td>Branch if EQual Zero, 如果 RS == 0，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BNEZ</td>
+<td>BNEZ RS, OFFSET</td>
+<td>BNE RS, x0, OFFSET</td>
+<td>Branch if Not Equal Zero, 如果 RS != 0，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BLTZ</td>
+<td>BLTZ RS, OFFSET</td>
+<td>BLT RS, x0, OFFSET</td>
+<td>Branch if Less Than Zero, 如果 RS &lt; 0，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BLEZ</td>
+<td>BLEZ RS, OFFSET</td>
+<td>BGE x0, RS, OFFSET</td>
+<td>Branch if Less or Equal Zero, 如果 RS &lt;= 0，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BGTZ</td>
+<td>BGTZ RS, OFFSET</td>
+<td>BLT x0, RS, OFFSET</td>
+<td>Branch if Greater Than Zero， 如果 RS &gt; 0，跳转到 OFFSET</td>
+</tr>
+<tr>
+<td>BGEZ</td>
+<td>BGEZ RS, OFFSET</td>
+<td>BGE RS, x0, OFFSET</td>
+<td>Branch if Greater or Equal Zero, 如果 RS &gt;= 0，跳转到 OFFSET</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="RISC-V-Features-n-times-16-bit-Instructions"><a href="#RISC-V-Features-n-times-16-bit-Instructions" class="headerlink" title="RISC-V Features, $n\times 16$-bit Instructions"></a>RISC-V Features, $n\times 16$-bit Instructions</h3><ul>
+<li><p>Extensions to RISC-V base ISA support 16-bit compressed instructions and also variable-length instructions that are multiples of 16-bits in length</p>
+</li>
+<li><p>To enable this, RISC-V <strong>scales the branch offset by 2 bytes</strong> even when there are no 16-bit instructions</p>
+</li>
+<li><p>Reduces branch reach by half and means that 1/2 of possible targets will be errors on RISC-V processors that only support 32-bit instructions (as used in this class)</p>
+</li>
+<li><p>RISC-V conditional branches can only reach $±\;2^{10} × 32$-bit instructions on either side of PC</p>
+</li>
+</ul>
+<hr>
+<h2 id="RISC-V-Immediates"><a href="#RISC-V-Immediates" class="headerlink" title="RISC-V Immediates"></a>RISC-V Immediates</h2><ul>
+<li><p><strong>==Immediates==</strong> are <strong>numerical constants</strong>.</p>
+</li>
+<li><p>They appear often in code, so there are <strong>special instructions</strong> for them.</p>
+</li>
+<li><p>Add Immediate using <code>addi</code>:</p>
+<p><strong><code>addi x3,x4,10</code></strong> (in RISC-V)</p>
+<p><code>f = g + 10</code> (in C)</p>
+<p>where RISC-V registers <strong>x3</strong>,<strong>x4</strong> are associated with C variables f, g</p>
+</li>
+<li><p>Syntax similar to add instruction, except that last argument is a number instead of a register.</p>
+</li>
+<li><p>Always <strong>sign-extended</strong> to make 32-bit instructions</p>
+</li>
+</ul>
+<h3 id="No-Subtract-Immediate"><a href="#No-Subtract-Immediate" class="headerlink" title="No Subtract Immediate"></a>No Subtract Immediate</h3><ul>
+<li>There is no Subtract Immediate in RISC-V: Why?<ul>
+<li>There are <strong>add</strong> and <strong>sub</strong>, but no <strong>addi</strong> counterpart</li>
+</ul>
+</li>
+<li>Limit types of operations that can be done to absolute minimum<ul>
+<li>if an operation can be decomposed into a simpler operation, don’t include it</li>
+<li>addi …, -x = “subi …, x” =&gt; so no “subi”<ul>
+<li><strong><code>addi x3,x4,-10</code></strong> (in RISC-V)</li>
+<li><code>f = g - 10</code> (in C)</li>
+</ul>
+</li>
+<li>where RISC-V registers <strong>x3</strong>,<strong>x4</strong> are associated with C variables f, g, respectively</li>
+</ul>
+</li>
+</ul>
+<h3 id="Register-Zero"><a href="#Register-Zero" class="headerlink" title="Register Zero"></a>Register Zero</h3><ul>
+<li>One particular immediate, the number zero (0), appears very often in code.</li>
+<li>So the register zero (x0) is ‘hard-wired’ to value 0; e.g.<ul>
+<li><strong><code>add x3,x4,x0</code></strong> (in RISC-V)</li>
+<li><code>f = g</code> (in C)</li>
+<li>where RISC-V registers <strong>x3</strong>,<strong>x4</strong> are associated with C variables f, g</li>
+</ul>
+</li>
+<li>Defined in hardware, so an instruction <strong>add x0,x3,x4</strong> will not do anything!</li>
+</ul>
+<hr>
+<h2 id="Memory-Addresses-are-in-Bytes"><a href="#Memory-Addresses-are-in-Bytes" class="headerlink" title="Memory Addresses are in Bytes"></a>Memory Addresses are in Bytes</h2><ul>
+<li>Data typically smaller than 32 bits, but rarely smaller than 8 bits (e.g., char type)–works fine if everything is a multiple of 8 bits</li>
+<li>8 bit chunk is called a byte (1 word = 4 bytes)</li>
+<li>Memory addresses are really in bytes, not words</li>
+<li>Word addresses are 4 bytes apart<ul>
+<li>Word address is same as address of rightmost byte – least-significant byte (i.e. Little-endian convention)</li>
+</ul>
+</li>
+<li>Data typically smaller than 32 bits, but rarely smaller than 8 bits (e.g., char type)–works fine if everything is a multiple of 8 bits</li>
+<li>8 bit chunk is called a byte (1 word = 4 bytes)</li>
+<li>Memory addresses are really in bytes, not words</li>
+<li>Word addresses are 4 bytes apart</li>
+<li>Word address is same as address of rightmost byte – least-significant byte (i.e. Little-endian convention)</li>
+</ul>
 
 
 <div class="article-footer fs14"><section id="license"><div class="header"><span>License</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
