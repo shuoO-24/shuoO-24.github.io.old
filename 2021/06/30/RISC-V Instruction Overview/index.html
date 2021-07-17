@@ -69,8 +69,8 @@
 <h2 id="语法介绍"><a href="#语法介绍" class="headerlink" title="语法介绍"></a>语法介绍</h2><ul>
 <li><p>An instruction consists of </p>
 <ul>
-<li><u>==opcode==</u>: unique code to specify the desired operation</li>
-<li>==<u>operands</u>==: zero or more additionalinformation needed for the operation</li>
+<li><u> opcode </u>: unique code to specify the desired operation</li>
+<li><u>operands</u> : zero or more additionalinformation needed for the operation</li>
 </ul>
 </li>
 <li><p>The operation designates the type and size of the operands</p>
@@ -98,10 +98,10 @@
 </li>
 <li><p><code>operation</code> 可以有以下多种类型:</p>
 <ul>
-<li>==instruction==(指令): 直接对应二进制机器指令的字符串</li>
-<li>==pseudo-instruction==(伪指令): 为了提高编写代码的效率，可以用一条伪指令指示汇编器产生多条实际的指令(instructions)。</li>
-<li>==directive==(指示/伪操作): 通过类似指令的形式(以“.”开头)，通知汇编器如何控制代码的产生等，不对应具体的指令。 </li>
-<li>==macro==: 采用 .macro/.endm 自定义的宏</li>
+<li><strong>instruction</strong> (指令): 直接对应二进制机器指令的字符串</li>
+<li><strong>pseudo-instruction</strong> (伪指令): 为了提高编写代码的效率，可以用一条伪指令指示汇编器产生多条实际的指令(instructions)。</li>
+<li><strong>directive</strong>(指示/伪操作): 通过类似指令的形式(以“.”开头)，通知汇编器如何控制代码的产生等，不对应具体的指令。 </li>
+<li><strong>macro</strong>: 采用 .macro/.endm 自定义的宏</li>
 </ul>
 </li>
 <li><p><code>comment</code>(注释): 注释方式，“#” 开始到当前行结束。</p>
@@ -127,24 +127,24 @@
 <li><code>func3</code> 和 <code>func7</code> 总是 $000$ 和 $0000000$</li>
 </ul>
 </li>
-<li><p>One <u>word</u> is 32 bits, so divide instruction word into “==fields==”</p>
+<li><p>One <u>word</u> is 32 bits, so divide instruction word into “<strong>fields</strong>”</p>
 <ul>
 <li>Each field tells processor something about instruction</li>
 </ul>
 </li>
 <li><p>We could define different fields for each instruction, but RISC-V seeks simplicity, so define six basic types of instruction formats:</p>
 <ol>
-<li><p><em>==R-format for register-register arithmetic operations==</em></p>
+<li><p><strong><em>R-format for register-register arithmetic operations</em></strong></p>
 </li>
-<li><p><em>==I-format for register-immediate arithmetic operations and loads==</em></p>
+<li><p><strong><em>I-format for register-immediate arithmetic operations and loads</em></strong></p>
 </li>
-<li><p><em>==S-format for stores==</em></p>
+<li><p><em>S-format for stores </em></p>
 </li>
-<li><p><em>==B-format for branches (minor variant of S-format)==</em></p>
+<li><p><em>B-format for branches (minor variant of S-format)</em></p>
 </li>
-<li><p><em>==U-format for 20-bit upper immediate instructions==</em></p>
+<li><p><em>U-format for 20-bit upper immediate instructions</em></p>
 </li>
-<li><p><em>==J-format for jumps (minor variant of U-format)==</em></p>
+<li><p><em>J-format for jumps (minor variant of U-format)</em></p>
 </li>
 </ol>
 </li>
@@ -318,7 +318,7 @@
 <h5 id="Determine-Offset"><a href="#Determine-Offset" class="headerlink" title="Determine Offset"></a>Determine Offset</h5><ul>
 <li><p><strong>Example</strong>: <img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jdpwn7ij30rs0a4dhg.jpg" alt="image-20210706061127996" style="zoom: 33%;" /></p>
 <ul>
-<li><p>==Branch <strong>offset</strong> = <strong>4</strong>×<strong>32-bit instructions = 16 bytes</strong>==</p>
+<li><p>Branch <strong>offset</strong> = <strong>4</strong>×<strong>32-bit instructions = 16 bytes</strong></p>
 <p>(Branch with offset of 0, branches to itself)</p>
 </li>
 <li><p><strong>Encoding</strong>:<img src="https://tva1.sinaimg.cn/large/008i3skNgy1gs7jidrvq4j30yo06u764.jpg" alt="image-20210706061556361"></p>
@@ -686,7 +686,7 @@
 </li>
 <li><p>There are two common ways you might see <code>auipc</code> used. </p>
 <ul>
-<li><p>The first is similarly to <code>lui</code>, it loads the label in the <code>la</code> pseudo-instruction; the difference between using <code>auipc</code> and <code>lui</code> that one address will be taken as a PC-relative address whilst the latter will be taken as an absolute address (you can also determine this at compile-time with various flags). <strong>NOTE: in 61C (and overall), <code>lui</code> is used when decomposing <code>la</code>; however it’s becoming more and more common to use <code>auipc</code> commonly.</strong></p>
+<li><p>The first is similarly to <code>lui</code>, it loads the label in the <code>la</code> pseudo-instruction; the difference between using <code>auipc</code> and <code>lui</code> that one address will be taken as a PC-relative address whilst the latter will be taken as an absolute address (you can also determine this at compile-time with various flags).</p>
 </li>
 <li><p>The second common usage is returning to a specific memory address, e.g. using it in conjunction with <code>jalr</code> in order to <strong>return from a function</strong>. The way in which this works is such that <code>auipc</code> will load a PC-relative address into a register, and then <code>jalr</code> can address to an <code>imm</code> number of bytes offset from that address in order to unconditionally jump to a memory location.</p>
 </li>
@@ -926,7 +926,7 @@
 </ul>
 <hr>
 <h2 id="RISC-V-Immediates"><a href="#RISC-V-Immediates" class="headerlink" title="RISC-V Immediates"></a>RISC-V Immediates</h2><ul>
-<li><p><strong>==Immediates==</strong> are <strong>numerical constants</strong>.</p>
+<li><p><strong>Immediate</strong> are <strong>numerical constants</strong>.</p>
 </li>
 <li><p>They appear often in code, so there are <strong>special instructions</strong> for them.</p>
 </li>
